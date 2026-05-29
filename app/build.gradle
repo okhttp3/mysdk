@@ -1,0 +1,60 @@
+apply plugin: 'com.android.application'
+
+android {
+    namespace 'com.a11.ad.test.a'
+    compileSdk 36
+
+    defaultConfig {
+        applicationId "com.a11.ad.test.a"
+        minSdk 26
+        targetSdk 36
+        versionCode 1
+        versionName "1.0"
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+    signingConfigs {
+        debug {
+            storeFile file("$rootDir/1.jks")
+            keyAlias 'key0'
+            keyPassword 'zrxcoh'
+            storePassword 'zrxcoh'
+        }
+        release {
+            storeFile file("$rootDir/1.jks")
+            keyAlias 'key0'
+            keyPassword 'zrxcoh'
+            storePassword 'zrxcoh'
+        }
+    }
+    buildTypes {
+        debug {
+            minifyEnabled false
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            debuggable false
+        }
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            debuggable false
+        }
+    }
+}
+
+dependencies {
+
+//    implementation project(':gads-sdk')
+
+    implementation 'androidx.appcompat:appcompat:1.7.1'
+
+    api fileTree(dir: 'libs', include: ['*.aar', '*.jar'])
+    implementation 'com.adjust.sdk:adjust-android:5.7.0'
+    implementation 'com.github.megatronking.stringfog:xor:5.0.0'
+    implementation("com.google.android.gms:play-services-ads:25.2.0")
+    implementation 'com.squareup.okhttp3:okhttp:5.3.2'
+    implementation 'com.github.bumptech.glide:glide:5.0.7'
+}

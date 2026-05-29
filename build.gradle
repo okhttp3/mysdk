@@ -1,0 +1,26 @@
+buildscript {
+    System.properties['com.android.build.gradle.overrideVersionCheck'] = 'true'
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.13.0'
+        classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:0.14.0'
+        classpath 'com.github.megatronking.stringfog:gradle-plugin:5.2.0'
+        classpath 'com.github.megatronking.stringfog:xor:5.0.0'
+    }
+}
+
+
+allprojects {
+    repositories {
+        mavenCentral()
+        google()
+    }
+}
+
+tasks.register('clean', Delete) {
+    delete rootProject.buildDir
+}

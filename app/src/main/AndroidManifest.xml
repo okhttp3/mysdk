@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application
+        android:name="com.demo.app.MyApp"
+        android:allowBackup="true"
+        android:icon="@mipmap/logo"
+        android:label="AdDemo"
+        android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+
+        <activity
+            android:name="com.demo.app.MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-4514574929692907~3553069520" />
+    </application>
+
+    <queries>
+        <package android:name="com.facebook.katana"/>
+        <package android:name="com.instagram.android"/>
+        <package android:name="com.amazon.amazonvideo.livingroom"/>
+        <package android:name="com.amazon.avod.thirdpartyclient"/>
+        <package android:name="com.amazon.mShop.android.shopping"/>
+        <package android:name="com.audible.application"/>
+        <package android:name="com.block.juggle"/>
+        <package android:name="com.crunchyroll.crunchyroid"/>
+        <package android:name="com.discord"/>
+        <package android:name="com.disney.disneyplus"/>
+        <package android:name="com.dropbox.android"/>
+        <package android:name="com.duolingo"/>
+        <package android:name="com.dywx.larkplayer"/>
+        <package android:name="com.einnovation.temu"/>
+        <package android:name="com.firsttouchgames.dls7"/>
+        <package android:name="com.grindrapp.android"/>
+        <package android:name="com.instagram.barcelona"/>
+        <package android:name="com.king.candycrushsaga"/>
+        <package android:name="com.king.candycrushsodasaga"/>
+        <package android:name="com.king.farmheroessaga"/>
+        <package android:name="com.lemon.lvoverseas"/>
+        <package android:name="com.linkedin.android"/>
+        <package android:name="com.ludo.king"/>
+        <package android:name="com.metropcs.metrozone"/>
+        <package android:name="com.microsoft.teams"/>
+        <package android:name="com.newleaf.app.android.victor"/>
+        <package android:name="com.paypal.android.p2pmobile"/>
+        <package android:name="com.peoplefun.wordcross"/>
+        <package android:name="com.pinterest"/>
+        <package android:name="com.snapchat.android"/>
+        <package android:name="com.spotify.music"/>
+        <package android:name="com.superking.parchisi.star"/>
+        <package android:name="com.tripledot.solitaire"/>
+        <package android:name="com.tripledot.triple.tile.match.pair.game.three.master.object"/>
+        <package android:name="com.tripledot.woodoku"/>
+        <package android:name="com.vitastudio.mahjong"/>
+        <package android:name="com.whatsapp"/>
+        <package android:name="com.zhiliaoapp.musically"/>
+        <package android:name="com.zzkko"/>
+        <package android:name="deezer.android.app"/>
+        <package android:name="fr.vinted"/>
+        <package android:name="in.mohalla.sharechat"/>
+        <package android:name="io.randomco.travel"/>
+        <package android:name="org.telegram.messenger"/>
+        <package android:name="tv.twitch.android.app"/>
+        <package android:name="wp.wattpad"/>
+        <package android:name="net.one97.paytm"/>
+        <package android:name="com.phonepe.app"/>
+        <package android:name="com.google.android.apps.nbu.paisa.user"/>
+        <package android:name="in.org.npci.upiapp"/>
+        <package android:name="in.amazon.mShop.android.shopping"/>
+        <package android:name="com.mobikwik_new"/>
+        <package android:name="com.freecharge.android"/>
+        <package android:name="com.myairtelapp"/>
+        <package android:name="com.sbi.upi"/>
+        <package android:name="com.csam.icici.bank.imobile"/>
+        <package android:name="com.dreamplug.androidapp"/>
+        <package android:name="com.myairtelapp"/>
+        <package android:name="com.whatsapp"/>
+    </queries>
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+</manifest>

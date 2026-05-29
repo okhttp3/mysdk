@@ -1,0 +1,12 @@
+*.iml
+.gradle/
+build/
+.idea/
+idea/
+local.properties
+proguardMapping.txt
+captures/
+/.idea/
+*.apk
+/app/release/
+/app/.cxx/

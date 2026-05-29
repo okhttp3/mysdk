@@ -1,0 +1,34 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.sdk.ad.gads-sdk-release-29:/values-v16/values-v16.xml",
+            "map": [
+                {
+                    "source": "C:\\.gradle\\caches\\9.0-milestone-1\\transforms\\0a801f69ebe38c7808439652b160a919\\transformed\\core-1.10.1\\res\\values-v16\\values-v16.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "65",
+                        "endOffsets": "116"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "com.sdk.ad.gads-sdk-mergeReleaseResources-27:/values-v16/values-v16.xml",
+            "map": [
+                {
+                    "source": "C:\\.gradle\\caches\\9.0-milestone-1\\transforms\\0a801f69ebe38c7808439652b160a919\\transformed\\core-1.10.1\\res\\values-v16\\values-v16.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "65",
+                        "endOffsets": "116"
+                    }
+                }
+            ]
+        }
+    ]
+}

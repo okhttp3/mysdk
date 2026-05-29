@@ -1,0 +1,355 @@
+# compiler: R8
+# compiler_version: 8.13.6
+# common_typos_disable
+# {"id":"com.android.tools.r8.mapping","version":"2.2"}
+# pg_map_id: 36867c58d7dafba1b8bf21bd6f0d43755c2b5fc35117f0ce7dc2bb1c4c3fa089
+# pg_map_hash: SHA-256 36867c58d7dafba1b8bf21bd6f0d43755c2b5fc35117f0ce7dc2bb1c4c3fa089
+com.sdk.ad.IMySdk -> com.sdk.ad.a:
+# {"id":"sourceFile","fileName":"IMySdk.java"}
+    void init(android.content.Context,java.lang.String,java.lang.String) -> a
+    void showAd(android.app.Activity,java.lang.String,java.lang.String,com.sdk.ad.MySdk$PrimaryListener) -> a
+com.sdk.ad.MySdk -> com.sdk.ad.MySdk:
+# {"id":"sourceFile","fileName":"MySdk.java"}
+    1:1:void <clinit>():8:8 -> <clinit>
+    1:1:void <init>():7:7 -> <init>
+    1:1:void init(android.content.Context,java.lang.String,java.lang.String):24:24 -> init
+    1:8:void showAd(android.app.Activity,java.lang.String,java.lang.String,com.sdk.ad.MySdk$PrimaryListener):34:41 -> showAd
+com.sdk.ad.MySdk$AdType -> com.sdk.ad.MySdk$AdType:
+# {"id":"sourceFile","fileName":"MySdk.java"}
+com.sdk.ad.MySdk$PrimaryListener -> com.sdk.ad.MySdk$PrimaryListener:
+# {"id":"sourceFile","fileName":"MySdk.java"}
+com.sdk.ad.MySdkImpl -> com.sdk.ad.MySdkImpl:
+# {"id":"sourceFile","fileName":"MySdkImpl.java"}
+    com.sdk.ad.MySdkImpl$InitState mInitState -> a
+    int mRetryCount -> b
+    android.os.Handler mMainHandler -> c
+    java.lang.String LOG_TAG -> d
+    java.lang.String VERSION -> e
+    java.lang.String STRATEGY_GOOGLE -> f
+    java.lang.String STRATEGY_CUSTOM -> g
+    java.lang.String EVENT_SHOW -> h
+    java.lang.String EVENT_CLICK -> i
+    java.lang.String APP_ID -> j
+    java.lang.String API_SDK -> k
+    java.lang.String ADJUST_ADID -> l
+    int MAX_RETRY_COUNT -> m
+    1:22:void <init>():20:41 -> <init>
+    1:4:void init(android.content.Context,java.lang.String,java.lang.String):45:48 -> a
+    5:18:void handleInitFailure(android.content.Context):83:96 -> a
+    19:27:void showAd(android.app.Activity,java.lang.String,java.lang.String,com.sdk.ad.MySdk$PrimaryListener):105:113 -> a
+    1:1:void lambda$handleInitFailure$0(android.content.Context):93:93 -> b
+    1:4:void startInitFlow(android.content.Context):55:58 -> c
+com.sdk.ad.MySdkImpl$1 -> com.sdk.ad.MySdkImpl$a:
+# {"id":"sourceFile","fileName":"MySdkImpl.java"}
+    android.content.Context val$appContext -> a
+    com.sdk.ad.MySdkImpl this$0 -> b
+    1:1:void <init>(com.sdk.ad.MySdkImpl,android.content.Context):58:58 -> <init>
+    1:1:void onSuccess():61:61 -> a
+    2:5:void lambda$onSuccess$0(android.content.Context):62:65 -> a
+    6:6:void onFailure(java.lang.Exception):71:71 -> a
+    7:8:void lambda$onFailure$1(java.lang.Exception,android.content.Context):72:73 -> a
+com.sdk.ad.MySdkImpl$AdRouter -> com.sdk.ad.MySdkImpl$b:
+# {"id":"sourceFile","fileName":"MySdkImpl.java"}
+    1:1:void <init>():153:153 -> <init>
+    1:6:void dispatch(android.app.Activity,java.lang.String,java.lang.String,com.sdk.ad.MySdk$PrimaryListener,com.sdk.ad.MySdkImpl$AdUnitConfig):156:161 -> a
+      # {"id":"com.android.tools.r8.residualsignature","signature":"(Landroid/app/Activity;Ljava/lang/String;Ljava/lang/String;Lcom/sdk/ad/MySdk$PrimaryListener;Lcom/sdk/ad/MySdkImpl$c;)V"}
+    7:12:void executeCustomAd(android.app.Activity,java.lang.String,com.sdk.ad.MySdkImpl$AdUnitConfig,com.sdk.ad.MySdk$PrimaryListener):170:175 -> a
+      # {"id":"com.android.tools.r8.residualsignature","signature":"(Landroid/app/Activity;Ljava/lang/String;Lcom/sdk/ad/MySdkImpl$c;Lcom/sdk/ad/MySdk$PrimaryListener;)V"}
+    13:21:void executeCustomAd(android.app.Activity,java.lang.String,com.sdk.ad.MySdkImpl$AdUnitConfig,com.sdk.ad.MySdk$PrimaryListener):173:181 -> a
+    22:27:void executeCustomAd(android.app.Activity,java.lang.String,com.sdk.ad.MySdkImpl$AdUnitConfig,com.sdk.ad.MySdk$PrimaryListener):173:178 -> a
+    28:32:void executeGoogleAd(android.app.Activity,java.lang.String,java.lang.String,com.sdk.ad.MySdk$PrimaryListener):191:195 -> a
+    33:41:void executeGoogleAd(android.app.Activity,java.lang.String,java.lang.String,com.sdk.ad.MySdk$PrimaryListener):193:201 -> a
+    42:47:void executeGoogleAd(android.app.Activity,java.lang.String,java.lang.String,com.sdk.ad.MySdk$PrimaryListener):193:198 -> a
+com.sdk.ad.MySdkImpl$AdUnitConfig -> com.sdk.ad.MySdkImpl$c:
+# {"id":"sourceFile","fileName":"MySdkImpl.java"}
+    boolean status -> a
+    java.lang.String sourceUrl -> b
+    java.lang.String jumpUrl -> c
+    1:4:void <init>():210:213 -> <init>
+    1:1:boolean isValidCustomAd():216:216 -> a
+com.sdk.ad.MySdkImpl$ConfigManager -> com.sdk.ad.MySdkImpl$d:
+# {"id":"sourceFile","fileName":"MySdkImpl.java"}
+    1:1:void <init>():119:119 -> <init>
+    1:1:boolean hasLocalCache(android.content.Context):121:121 -> a
+    2:10:com.sdk.ad.MySdkImpl$AdUnitConfig getAdUnitConfig(android.content.Context,java.lang.String):125:133 -> a
+      # {"id":"com.android.tools.r8.residualsignature","signature":"(Landroid/content/Context;Ljava/lang/String;)Lcom/sdk/ad/MySdkImpl$c;"}
+    1:4:void preloadVideoAdIfEnabled(android.content.Context):142:145 -> b
+com.sdk.ad.MySdkImpl$InitState -> com.sdk.ad.MySdkImpl$InitState:
+# {"id":"sourceFile","fileName":"MySdkImpl.java"}
+    com.sdk.ad.MySdkImpl$InitState[] $VALUES -> a
+    1:1:void <clinit>():35:35 -> <clinit>
+    1:1:void <init>(java.lang.String,int):35:35 -> <init>
+    1:1:com.sdk.ad.MySdkImpl$InitState[] $values():35:35 -> a
+    1:1:com.sdk.ad.MySdkImpl$InitState valueOf(java.lang.String):35:35 -> valueOf
+    1:1:com.sdk.ad.MySdkImpl$InitState[] values():35:35 -> values
+com.sdk.ad.StringFog -> a.a:
+# {"id":"sourceFile","fileName":"StringFog.java"}
+    com.github.megatronking.stringfog.xor.StringFogImpl IMPL -> a
+    1:1:void <clinit>():11:11 -> <clinit>
+    1:1:void <init>():10:10 -> <init>
+    1:1:java.lang.String decrypt(java.lang.String,java.lang.String):14:14 -> a
+com.sdk.ad.custom.PrimaryManager -> b.a:
+# {"id":"sourceFile","fileName":"PrimaryManager.java"}
+    java.lang.String TAG_INTERNAL_LAYOUT_ROOT -> a
+    android.os.Handler uiHandler -> b
+    android.media.MediaPlayer sMediaPlayer -> c
+    boolean sIsVideoReady -> d
+    1:214:void <clinit>():32:245 -> <clinit>
+    1:1:void <init>():30:30 -> <init>
+    1:1:int dpToPx(android.app.Activity,int):39:39 -> a
+    2:2:int dpToPx(android.app.Activity,int):38:38 -> a
+    3:6:android.graphics.drawable.GradientDrawable createRoundDrawable(java.lang.String,int,android.app.Activity):46:49 -> a
+    7:104:void initPrimaryView(android.app.Activity,java.lang.String,java.lang.String,java.lang.String):58:155 -> a
+    105:105:void lambda$initPrimaryView$0(android.app.Activity,java.lang.String,java.lang.String,android.view.View):144:144 -> a
+    106:106:void lambda$initPrimaryView2$1(android.view.ViewGroup,android.view.View):230:230 -> a
+    107:108:void handleClick(android.app.Activity,java.lang.String,java.lang.String):239:240 -> a
+    109:128:void lambda$preloadVideoAd$5(android.content.Context,java.lang.String):255:274 -> a
+    129:129:void lambda$preloadVideoAd$3(android.media.MediaPlayer):264:264 -> a
+    130:130:boolean lambda$preloadVideoAd$4(android.media.MediaPlayer,int,int):268:268 -> a
+    131:319:void initPrimaryView3(android.app.Activity,java.lang.String,java.lang.String,java.lang.String,com.sdk.ad.MySdk$PrimaryListener):283:471 -> a
+    320:353:void lambda$initPrimaryView3$6(android.view.TextureView,android.widget.FrameLayout,android.app.Activity):296:329 -> a
+    354:360:void lambda$initPrimaryView3$8(com.sdk.ad.MySdk$PrimaryListener,boolean[],android.view.ViewGroup,android.app.Activity,java.lang.String,android.view.View):462:468 -> a
+    361:368:void releasePlayer():477:484 -> a
+    369:373:void remove(android.view.ViewGroup):488:492 -> a
+    1:73:void initPrimaryView2(android.app.Activity,java.lang.String,java.lang.String,java.lang.String):163:235 -> b
+    74:74:void lambda$initPrimaryView2$2(android.app.Activity,java.lang.String,java.lang.String,android.view.View):232:232 -> b
+    75:76:void preloadVideoAd(android.content.Context,java.lang.String):252:253 -> b
+    1:1:void lambda$initPrimaryView3$7(android.app.Activity,java.lang.String,java.lang.String,android.view.View):398:398 -> c
+com.sdk.ad.custom.PrimaryManager$1 -> b.a$a:
+# {"id":"sourceFile","fileName":"PrimaryManager.java"}
+    android.app.Activity val$activity -> a
+    android.widget.FrameLayout val$mainLayout -> b
+    int[] val$timeLeft -> c
+    android.widget.TextView val$skipBtn -> d
+    android.view.ViewGroup val$rootDecor -> e
+    1:1:void <init>(android.app.Activity,android.widget.FrameLayout,int[],android.widget.TextView,android.view.ViewGroup):119:119 -> <init>
+    1:1:void lambda$run$0(android.view.ViewGroup,android.view.View):130:130 -> a
+    1:1:void lambda$run$1(android.view.ViewGroup,android.view.View):136:136 -> b
+    1:15:void run():122:136 -> run
+com.sdk.ad.custom.PrimaryManager$2 -> b.a$b:
+# {"id":"sourceFile","fileName":"PrimaryManager.java"}
+    android.app.Activity val$activity -> a
+    java.lang.String val$sourceUrl -> b
+    java.lang.Runnable val$adaptVideoSize -> c
+    1:1:void <init>(android.app.Activity,java.lang.String,java.lang.Runnable):334:334 -> <init>
+    1:2:void lambda$onSurfaceTextureAvailable$0(android.app.Activity,java.lang.Runnable,android.media.MediaPlayer):346:347 -> a
+    3:3:void lambda$onSurfaceTextureAvailable$1(java.lang.Runnable,android.media.MediaPlayer,int,int):353:353 -> a
+    4:5:void lambda$onSurfaceTextureAvailable$2(java.lang.Runnable,android.media.MediaPlayer):360:361 -> a
+    1:23:void onSurfaceTextureAvailable(android.graphics.SurfaceTexture,int,int):337:359 -> onSurfaceTextureAvailable
+    1:2:boolean onSurfaceTextureDestroyed(android.graphics.SurfaceTexture):376:377 -> onSurfaceTextureDestroyed
+    1:1:void onSurfaceTextureSizeChanged(android.graphics.SurfaceTexture,int,int):371:371 -> onSurfaceTextureSizeChanged
+    1:1:void onSurfaceTextureUpdated(android.graphics.SurfaceTexture):384:384 -> onSurfaceTextureUpdated
+com.sdk.ad.custom.PrimaryManager$3 -> b.a$c:
+# {"id":"sourceFile","fileName":"PrimaryManager.java"}
+    android.app.Activity val$activity -> a
+    android.widget.FrameLayout val$videoLayout -> b
+    int[] val$secondsRemaining -> c
+    android.widget.TextView val$timerView -> d
+    boolean[] val$isRewardEarned -> e
+    android.widget.TextView val$closeBtn -> f
+    1:1:void <init>(android.app.Activity,android.widget.FrameLayout,int[],android.widget.TextView,boolean[],android.widget.TextView):443:443 -> <init>
+    1:11:void run():446:456 -> run
+com.sdk.ad.loader.BannerAdLoader -> c.a:
+# {"id":"sourceFile","fileName":"BannerAdLoader.java"}
+    java.lang.String TAG_BANNER_CONTAINER -> a
+    1:1:void <clinit>():0:0 -> <clinit>
+    1:1:void <init>():23:23 -> <init>
+    1:58:void loadAndShow(android.app.Activity,java.lang.String,java.lang.String):28:85 -> a
+    59:65:void removeExistingBanner(android.view.ViewGroup):95:101 -> a
+com.sdk.ad.loader.BannerAdLoader$1 -> c.a$a:
+# {"id":"sourceFile","fileName":"BannerAdLoader.java"}
+    android.widget.FrameLayout val$container -> a
+    android.view.ViewGroup val$rootDecor -> b
+    android.app.Activity val$activity -> c
+    java.lang.String val$type -> d
+    1:1:void <init>(android.widget.FrameLayout,android.view.ViewGroup,android.app.Activity,java.lang.String):53:53 -> <init>
+    1:2:void onAdClicked():74:75 -> onAdClicked
+    1:3:void onAdFailedToLoad(com.google.android.gms.ads.LoadAdError):67:69 -> onAdFailedToLoad
+    1:6:void onAdLoaded():56:61 -> onAdLoaded
+com.sdk.ad.loader.OpenAdLoader -> c.b:
+# {"id":"sourceFile","fileName":"OpenAdLoader.java"}
+    1:1:void <init>():17:17 -> <init>
+    1:2:void loadAndShow(android.app.Activity,java.lang.String,java.lang.String):20:21 -> a
+com.sdk.ad.loader.OpenAdLoader$1 -> c.b$a:
+# {"id":"sourceFile","fileName":"OpenAdLoader.java"}
+    android.app.Activity val$activity -> a
+    java.lang.String val$type -> b
+    1:1:void <init>(android.app.Activity,java.lang.String):21:21 -> <init>
+    1:1:void onAdFailedToLoad(com.google.android.gms.ads.LoadAdError):42:42 -> onAdFailedToLoad
+    1:1:void onAdLoaded(java.lang.Object):21:21 -> onAdLoaded
+    2:15:void onAdLoaded(com.google.android.gms.ads.appopen.AppOpenAd):24:37 -> onAdLoaded
+com.sdk.ad.loader.OpenAdLoader$1$1 -> c.b$a$a:
+# {"id":"sourceFile","fileName":"OpenAdLoader.java"}
+    com.sdk.ad.loader.OpenAdLoader$1 this$0 -> a
+      # {"id":"com.android.tools.r8.residualsignature","signature":"Lc/b$a;"}
+    1:1:void <init>(com.sdk.ad.loader.OpenAdLoader$1):26:26 -> <init>
+      # {"id":"com.android.tools.r8.residualsignature","signature":"(Lc/b$a;)V"}
+    1:1:void onAdClicked():34:34 -> onAdClicked
+    1:1:void onAdShowedFullScreenContent():29:29 -> onAdShowedFullScreenContent
+com.sdk.ad.loader.RewardedAdLoader -> c.c:
+# {"id":"sourceFile","fileName":"RewardedAdLoader.java"}
+    1:1:void <init>():18:18 -> <init>
+    1:2:void loadAndShow(android.app.Activity,java.lang.String,java.lang.String,com.sdk.ad.MySdk$PrimaryListener):21:22 -> a
+com.sdk.ad.loader.RewardedAdLoader$1 -> c.c$a:
+# {"id":"sourceFile","fileName":"RewardedAdLoader.java"}
+    android.app.Activity val$activity -> a
+    java.lang.String val$type -> b
+    com.sdk.ad.MySdk$PrimaryListener val$listener -> c
+    1:1:void <init>(android.app.Activity,java.lang.String,com.sdk.ad.MySdk$PrimaryListener):22:22 -> <init>
+    1:2:void onAdFailedToLoad(com.google.android.gms.ads.LoadAdError):68:69 -> onAdFailedToLoad
+    1:1:void onAdLoaded(java.lang.Object):22:22 -> onAdLoaded
+    2:34:void onAdLoaded(com.google.android.gms.ads.rewarded.RewardedAd):26:58 -> onAdLoaded
+com.sdk.ad.loader.RewardedAdLoader$1$1 -> c.c$a$a:
+# {"id":"sourceFile","fileName":"RewardedAdLoader.java"}
+    boolean[] val$userEarnedReward -> a
+    com.sdk.ad.loader.RewardedAdLoader$1 this$0 -> b
+      # {"id":"com.android.tools.r8.residualsignature","signature":"Lc/c$a;"}
+    1:1:void <init>(com.sdk.ad.loader.RewardedAdLoader$1,boolean[]):27:27 -> <init>
+      # {"id":"com.android.tools.r8.residualsignature","signature":"(Lc/c$a;[Z)V"}
+    1:2:void onAdClicked():35:36 -> onAdClicked
+    1:5:void onAdDismissedFullScreenContent():48:52 -> onAdDismissedFullScreenContent
+    1:2:void onAdFailedToShowFullScreenContent(com.google.android.gms.ads.AdError):41:42 -> onAdFailedToShowFullScreenContent
+    1:1:void onAdShowedFullScreenContent():30:30 -> onAdShowedFullScreenContent
+com.sdk.ad.loader.RewardedAdLoader$1$2 -> c.c$a$b:
+# {"id":"sourceFile","fileName":"RewardedAdLoader.java"}
+    boolean[] val$userEarnedReward -> a
+    com.sdk.ad.loader.RewardedAdLoader$1 this$0 -> b
+      # {"id":"com.android.tools.r8.residualsignature","signature":"Lc/c$a;"}
+    1:1:void <init>(com.sdk.ad.loader.RewardedAdLoader$1,boolean[]):58:58 -> <init>
+      # {"id":"com.android.tools.r8.residualsignature","signature":"(Lc/c$a;[Z)V"}
+    1:1:void onUserEarnedReward(com.google.android.gms.ads.rewarded.RewardItem):61:61 -> onUserEarnedReward
+com.sdk.ad.network.Api -> d.a:
+# {"id":"sourceFile","fileName":"Api.java"}
+    1:1:void <init>():24:24 -> <init>
+    1:3:void fetchRemoteConfig(android.content.Context,com.sdk.ad.network.Api$ConfigCallback):37:39 -> a
+      # {"id":"com.android.tools.r8.residualsignature","signature":"(Landroid/content/Context;Ld/a$b;)V"}
+    4:65:void lambda$fetchRemoteConfig$0(android.content.Context,com.sdk.ad.network.Api$ConfigCallback,org.json.JSONObject):41:102 -> a
+      # {"id":"com.android.tools.r8.residualsignature","signature":"(Landroid/content/Context;Ld/a$b;Lorg/json/JSONObject;)V"}
+    66:66:void reportAdEvent(android.content.Context,java.lang.String,java.lang.String,java.lang.String):111:111 -> a
+    67:81:void lambda$reportAdEvent$1(java.lang.String,java.lang.String,java.lang.String,android.content.Context):112:126 -> a
+com.sdk.ad.network.Api$1 -> d.a$a:
+# {"id":"sourceFile","fileName":"Api.java"}
+    android.content.Context val$context -> a
+    com.sdk.ad.network.Api$ConfigCallback val$callback -> b
+      # {"id":"com.android.tools.r8.residualsignature","signature":"Ld/a$b;"}
+    1:1:void <init>(android.content.Context,com.sdk.ad.network.Api$ConfigCallback):47:47 -> <init>
+      # {"id":"com.android.tools.r8.residualsignature","signature":"(Landroid/content/Context;Ld/a$b;)V"}
+    1:3:void onFailure(okhttp3.Call,java.io.IOException):95:97 -> onFailure
+    1:35:void onResponse(okhttp3.Call,okhttp3.Response):51:85 -> onResponse
+    36:62:void onResponse(okhttp3.Call,okhttp3.Response):54:80 -> onResponse
+    63:101:void onResponse(okhttp3.Call,okhttp3.Response):50:88 -> onResponse
+com.sdk.ad.network.Api$ConfigCallback -> d.a$b:
+# {"id":"sourceFile","fileName":"Api.java"}
+    void onFailure(java.lang.Exception) -> a
+    void onSuccess() -> a
+com.sdk.ad.network.DeviceProfileCollector -> d.b:
+# {"id":"sourceFile","fileName":"DeviceProfileCollector.java"}
+    java.lang.String[] TARGET_PACKAGES -> a
+    1:1:void <clinit>():22:22 -> <clinit>
+    1:1:void <init>():16:16 -> <init>
+    1:1:void collectAsync(android.content.Context,com.sdk.ad.network.DeviceProfileCollector$CollectorCallback):86:86 -> a
+      # {"id":"com.android.tools.r8.residualsignature","signature":"(Landroid/content/Context;Ld/b$a;)V"}
+    1:38:void lambda$collectAsync$0(android.content.Context,com.sdk.ad.network.DeviceProfileCollector$CollectorCallback):88:125 -> b
+      # {"id":"com.android.tools.r8.residualsignature","signature":"(Landroid/content/Context;Ld/b$a;)V"}
+com.sdk.ad.network.DeviceProfileCollector$CollectorCallback -> d.b$a:
+# {"id":"sourceFile","fileName":"DeviceProfileCollector.java"}
+    void onCollected(org.json.JSONObject) -> a
+com.sdk.ad.network.NetworkManager -> d.c:
+# {"id":"sourceFile","fileName":"NetworkManager.java"}
+    okhttp3.OkHttpClient httpClient -> a
+    java.util.concurrent.ExecutorService singleThreadExecutor -> b
+    com.sdk.ad.network.NetworkManager instance -> c
+      # {"id":"com.android.tools.r8.residualsignature","signature":"Ld/c;"}
+    1:7:void <init>():25:31 -> <init>
+    1:1:java.util.concurrent.ExecutorService getExecutor():42:42 -> a
+    2:11:void postEncryptedJson(java.lang.String,java.lang.String,java.lang.String,okhttp3.Callback):51:60 -> a
+    12:15:boolean isNetworkConnected(android.content.Context):66:69 -> a
+    1:4:com.sdk.ad.network.NetworkManager getInstance():35:38 -> b
+      # {"id":"com.android.tools.r8.residualsignature","signature":"()Ld/c;"}
+com.sdk.ad.network.OfflineReportQueue -> d.d:
+# {"id":"sourceFile","fileName":"OfflineReportQueue.java"}
+    boolean isLooping -> a
+    com.sdk.ad.network.OfflineReportQueue instance -> b
+      # {"id":"com.android.tools.r8.residualsignature","signature":"Ld/d;"}
+    java.lang.Object LOCK -> c
+    java.lang.String SP_NAME -> d
+    java.lang.String KEY_QUEUE -> e
+    1:1:void <clinit>():26:26 -> <clinit>
+    1:1:void <init>():32:32 -> <init>
+    2:2:void <init>():30:30 -> <init>
+    1:4:com.sdk.ad.network.OfflineReportQueue getInstance():36:39 -> a
+      # {"id":"com.android.tools.r8.residualsignature","signature":"()Ld/d;"}
+    5:13:void checkAndStartQueue(android.content.Context):60:68 -> a
+    14:47:void executeHttpCall(android.content.Context,org.json.JSONObject,boolean):113:146 -> a
+    48:62:void saveToDisk(android.content.Context,org.json.JSONObject):151:165 -> a
+    1:8:void submitEvent(android.content.Context,org.json.JSONObject):46:53 -> b
+    9:10:int getLocalQueueLength(android.content.Context):184:185 -> b
+    1:29:void lambda$scheduleLoopSlice$0(android.content.Context):75:103 -> c
+    1:11:void removeQueueHead(android.content.Context):169:179 -> d
+    1:1:void scheduleLoopSlice(android.content.Context):73:73 -> e
+com.sdk.ad.network.OfflineReportQueue$1 -> d.d$a:
+# {"id":"sourceFile","fileName":"OfflineReportQueue.java"}
+    boolean val$isFromLoop -> a
+    android.content.Context val$context -> b
+    org.json.JSONObject val$payload -> c
+    com.sdk.ad.network.OfflineReportQueue this$0 -> d
+      # {"id":"com.android.tools.r8.residualsignature","signature":"Ld/d;"}
+    1:1:void <init>(com.sdk.ad.network.OfflineReportQueue,boolean,android.content.Context,org.json.JSONObject):123:123 -> <init>
+      # {"id":"com.android.tools.r8.residualsignature","signature":"(Ld/d;ZLandroid/content/Context;Lorg/json/JSONObject;)V"}
+    1:3:void onFailure(okhttp3.Call,java.io.IOException):126:128 -> onFailure
+    1:9:void onResponse(okhttp3.Call,okhttp3.Response):134:142 -> onResponse
+    10:10:void onResponse(okhttp3.Call,okhttp3.Response):133:133 -> onResponse
+com.sdk.ad.util.AdUrlHttpUtil -> e.a:
+# {"id":"sourceFile","fileName":"AdUrlHttpUtil.java"}
+    1:1:void <init>():8:8 -> <init>
+    1:9:void openBrowser(android.content.Context,java.lang.String):17:25 -> a
+com.sdk.ad.util.AdvertisingIdUtil -> e.b:
+# {"id":"sourceFile","fileName":"AdvertisingIdUtil.java"}
+    1:1:void <init>():9:9 -> <init>
+    1:12:java.lang.String getGoogleAdId(android.content.Context):17:28 -> a
+com.sdk.ad.util.CryptoUtils -> e.c:
+# {"id":"sourceFile","fileName":"CryptoUtils.java"}
+    java.lang.String AES_KEY -> a
+    1:1:void <clinit>():0:0 -> <clinit>
+    1:1:void <init>():13:13 -> <init>
+    1:23:java.lang.String decrypt(java.lang.String):43:65 -> a
+    24:24:java.lang.String decrypt(java.lang.String):43:43 -> a
+    1:22:java.lang.String encrypt(java.lang.String):17:38 -> b
+    23:23:java.lang.String encrypt(java.lang.String):17:17 -> b
+com.sdk.ad.util.DeviceUtils -> e.d:
+# {"id":"sourceFile","fileName":"DeviceUtils.java"}
+    java.lang.String cachedGaid -> a
+    1:1:void <clinit>():15:15 -> <clinit>
+    1:1:void <init>():14:14 -> <init>
+    1:5:java.lang.String getGaid(android.content.Context):23:27 -> a
+    6:10:boolean checkAppInstalled(android.content.Context,java.lang.String):105:109 -> a
+    1:11:int getMcc(android.content.Context):36:46 -> b
+    1:9:int getMnc(android.content.Context):57:65 -> c
+    1:6:boolean hasSimCard(android.content.Context):90:95 -> d
+    1:5:boolean isUsbDebugOn(android.content.Context):76:80 -> e
+com.sdk.ad.util.StorageManager -> e.e:
+# {"id":"sourceFile","fileName":"StorageManager.java"}
+    java.lang.String SP_NAME -> a
+    java.lang.String KEY_UDID -> b
+    java.lang.String KEY_AD_DATA -> c
+    1:1:void <clinit>():0:0 -> <clinit>
+    1:1:void <init>():10:10 -> <init>
+    1:10:void saveConfig(android.content.Context,java.lang.String,java.lang.String):19:28 -> a
+    11:15:java.lang.String getAdData(android.content.Context):47:51 -> a
+    1:6:java.lang.String getOpenUdid(android.content.Context):35:40 -> b
+com.sdk.ad.util.XXTeaUtil -> e.f:
+# {"id":"sourceFile","fileName":"XXTeaUtil.java"}
+    int DELTA -> a
+    1:1:void <init>():14:14 -> <init>
+    1:1:int MX(int,int,int,int,int,int[]):20:20 -> a
+    2:5:byte[] decrypt(byte[],byte[]):31:34 -> a
+    6:21:java.lang.String decryptFromBase64String(java.lang.String,java.lang.String):46:61 -> a
+    22:22:java.lang.String decryptFromBase64String(java.lang.String,java.lang.String):47:47 -> a
+    23:34:int[] decrypt(int[],int[]):85:96 -> a
+    35:37:byte[] fixKey(byte[]):103:105 -> a
+    38:48:int[] toIntArray(byte[],boolean):110:120 -> a
+    49:61:byte[] toByteArray(int[],boolean):126:138 -> a
+    1:4:byte[] encrypt(byte[],byte[]):24:27 -> b
+    5:6:java.lang.String encryptToBase64String(java.lang.String,java.lang.String):41:42 -> b
+    7:7:java.lang.String encryptToBase64String(java.lang.String,java.lang.String):40:40 -> b
+    8:19:int[] encrypt(int[],int[]):68:79 -> b

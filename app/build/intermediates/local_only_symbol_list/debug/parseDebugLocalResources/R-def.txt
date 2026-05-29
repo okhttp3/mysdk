@@ -1,0 +1,7 @@
+R_DEF: Internal format may change without notice
+local
+id btn_show_banner
+id btn_show_open
+id btn_show_rewarded
+layout activity_main
+mipmap logo

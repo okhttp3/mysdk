@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "com.a11.ad.test.a.app-debug-35:/mipmap-xhdpi_logo.png.flat",
+        "source": "com.a11.ad.test.a.app-main-37:/mipmap-xhdpi/logo.png"
+    },
+    {
+        "merged": "com.a11.ad.test.a.app-debug-35:/layout_activity_main.xml.flat",
+        "source": "com.a11.ad.test.a.app-main-37:/layout/activity_main.xml"
+    }
+]

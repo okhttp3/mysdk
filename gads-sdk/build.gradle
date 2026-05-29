@@ -1,0 +1,62 @@
+import com.github.megatronking.stringfog.plugin.StringFogMode
+import com.github.megatronking.stringfog.plugin.kg.RandomKeyGenerator
+
+apply plugin: 'com.android.library'
+apply plugin: 'stringfog'
+apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
+
+stringfog {
+    enable true  // 开启加密
+    implementation 'com.github.megatronking.stringfog.xor.StringFogImpl'  // 指定实现类:cite[3]
+    kg new RandomKeyGenerator()  // 随机密钥生成器（推荐）:cite[2]
+    mode StringFogMode.base64    // 加密后格式：base64（默认）:cite[6]
+}
+android {
+    namespace 'com.sdk.ad'
+    compileSdk 36
+
+    defaultConfig {
+        minSdk 26
+        targetSdk 36
+        versionName "1.0"
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+    buildTypes {
+        debug {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            debuggable false
+        }
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            debuggable false
+        }
+    }
+    android.libraryVariants.configureEach { variant ->
+        variant.outputs.all { output ->
+            def f = output.outputFileName
+            if (f != null && f.endsWith('.aar')) {
+                def fileName = "mysdk-v" + defaultConfig.versionName + ".aar"
+                output.outputFileName = fileName
+            }
+        }
+    }
+}
+
+dependencies {
+    implementation("com.google.android.gms:play-services-ads:25.2.0")
+    implementation 'com.squareup.okhttp3:okhttp:5.3.2'
+    implementation 'com.github.bumptech.glide:glide:5.0.7'
+    implementation 'com.github.megatronking.stringfog:xor:5.0.0'
+    implementation 'com.adjust.sdk:adjust-android:5.7.0'
+}
+
+tasks.register('exportAar', Copy) {
+    dependsOn 'assembleRelease'
+    from('build/outputs/aar/')
+    into('../release/')
+}

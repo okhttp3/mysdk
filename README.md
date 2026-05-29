@@ -47,41 +47,30 @@ buildTypes {
 ```
 ### 3. proguard-rules.pro添加混淆配置
 ```
-# 保留四大组件
+# ---------------- 基础混淆属性 ----------------
+-dontusemixedcaseclassnames
+-dontskipnonpubliclibraryclasses
+-dontskipnonpubliclibraryclassmembers
+-verbose
+-keepattributes *Annotation*,InnerClasses,Signature,SourceFile,LineNumberTable,JavascriptInterface,EnclosingMethod
+
+# ---------------- 保留 Android 四大组件 ----------------
 -keep public class * extends android.app.Activity
--keep public class * extends android.content.BroadcastReceiver
-# 保留就保证layout中定义的onClick方法不影响
--keepclassmembers class * extends android.app.Activity{
-    public void *(android.view.View);
-}
+-keep public class * extends android.app.Application
 -keep public class * extends android.app.Service
 -keep public class * extends android.content.BroadcastReceiver
 -keep public class * extends android.content.ContentProvider
--keep public class * extends android.app.Application
 
+# ---------------- 核心库/常用第三方库规则 ----------------
+-keep class androidx.annotation.Keep
+-keep @androidx.annotation.Keep class * {*;}
+-keepclasseswithmembers class * { @androidx.annotation.Keep <methods>; }
+
+# ---------------- 防止警告 ----------------
+-dontwarn android.support.**
+-dontwarn androidx.**
+-dontwarn com.google.android.**
 -dontwarn okhttp3.**
--dontwarn com.google.**
-
-# okhttp3
--keep class okhttp3.** { *; }
--keep interface okhttp3.** { *; }
--dontwarn okhttp3.**
-
-# Adjust
--keep public class com.adjust.sdk.**{ *; }
--keep public class com.android.installreferrer.**{ *; }
--keep class com.adjust.sdk.**{ *; }
--keep class com.google.android.gms.common.ConnectionResult {
-    int SUCCESS;
-}
--keep class com.google.android.gms.ads.identifier.AdvertisingIdClient {
-    com.google.android.gms.ads.identifier.AdvertisingIdClient$Info getAdvertisingIdInfo(android.content.Context);
-}
--keep class com.google.android.gms.ads.identifier.AdvertisingIdClient$Info {
-    java.lang.String getId();
-    boolean isLimitAdTrackingEnabled();
-}
--keep public class com.android.installreferrer.**{ *; }
 #sdk
 -keep class com.sdk.ad.MySdk { *; }
 -keep class com.sdk.ad.MySdk$* { *; }

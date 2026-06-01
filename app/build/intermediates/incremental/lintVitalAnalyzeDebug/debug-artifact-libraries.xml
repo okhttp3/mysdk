@@ -1,9 +1,10 @@
 <libraries>
   <library
-      name="__local_aars__:C:\Users\small\works\MyAdSystem\app\libs\mysdk-v1.0.aar:unspecified@jar"
-      jars="C:\.gradle\caches\9.0-milestone-1\transforms\59cd9a374cf27ae41ec836e1ac544653\transformed\mysdk-v1.0\jars\classes.jar"
-      resolved="__local_aars__:C:\Users\small\works\MyAdSystem\app\libs\mysdk-v1.0.aar:unspecified"
-      folder="C:\.gradle\caches\9.0-milestone-1\transforms\59cd9a374cf27ae41ec836e1ac544653\transformed\mysdk-v1.0"
+      name=":@@:gads-sdk::debug"
+      jars="C:\.gradle\caches\9.0-milestone-1\transforms\6dab89a4d82b4324a6da5646a6e60557\transformed\out\jars\classes.jar;C:\.gradle\caches\9.0-milestone-1\transforms\6dab89a4d82b4324a6da5646a6e60557\transformed\out\jars\libs\R.jar"
+      resolved="MyAdSystem:gads-sdk:unspecified"
+      partialResultsDir="C:\Users\small\works\MyAdSystem\gads-sdk\build\intermediates\lint_vital_partial_results\debug\lintVitalAnalyzeDebug\out"
+      folder="C:\.gradle\caches\9.0-milestone-1\transforms\6dab89a4d82b4324a6da5646a6e60557\transformed\out"
       manifest="AndroidManifest.xml"
       resFolder="res"
       assetsFolder="assets"
@@ -86,6 +87,19 @@
       jars="C:\.gradle\caches\9.0-milestone-1\transforms\6d9fc3353819856fc094951e7f410214\transformed\play-services-ads-api-25.2.0\jars\classes.jar"
       resolved="com.google.android.gms:play-services-ads-api:25.2.0"
       folder="C:\.gradle\caches\9.0-milestone-1\transforms\6d9fc3353819856fc094951e7f410214\transformed\play-services-ads-api-25.2.0"
+      manifest="AndroidManifest.xml"
+      resFolder="res"
+      assetsFolder="assets"
+      lintJar="lint.jar"
+      publicResources="public.txt"
+      symbolFile="R.txt"
+      externalAnnotations="annotations.zip"
+      proguardRules="proguard.txt"/>
+  <library
+      name="androidx.browser:browser:1.8.0@aar"
+      jars="C:\.gradle\caches\9.0-milestone-1\transforms\00f7633f1491a9d676bcb9dbb45597fa\transformed\browser-1.8.0\jars\classes.jar"
+      resolved="androidx.browser:browser:1.8.0"
+      folder="C:\.gradle\caches\9.0-milestone-1\transforms\00f7633f1491a9d676bcb9dbb45597fa\transformed\browser-1.8.0"
       manifest="AndroidManifest.xml"
       resFolder="res"
       assetsFolder="assets"
@@ -229,19 +243,6 @@
       jars="C:\.gradle\caches\9.0-milestone-1\transforms\936ccdfb6b8a89a6b6b3e467d1913a0f\transformed\drawerlayout-1.0.0\jars\classes.jar"
       resolved="androidx.drawerlayout:drawerlayout:1.0.0"
       folder="C:\.gradle\caches\9.0-milestone-1\transforms\936ccdfb6b8a89a6b6b3e467d1913a0f\transformed\drawerlayout-1.0.0"
-      manifest="AndroidManifest.xml"
-      resFolder="res"
-      assetsFolder="assets"
-      lintJar="lint.jar"
-      publicResources="public.txt"
-      symbolFile="R.txt"
-      externalAnnotations="annotations.zip"
-      proguardRules="proguard.txt"/>
-  <library
-      name="androidx.browser:browser:1.8.0@aar"
-      jars="C:\.gradle\caches\9.0-milestone-1\transforms\00f7633f1491a9d676bcb9dbb45597fa\transformed\browser-1.8.0\jars\classes.jar"
-      resolved="androidx.browser:browser:1.8.0"
-      folder="C:\.gradle\caches\9.0-milestone-1\transforms\00f7633f1491a9d676bcb9dbb45597fa\transformed\browser-1.8.0"
       manifest="AndroidManifest.xml"
       resFolder="res"
       assetsFolder="assets"
@@ -633,23 +634,6 @@
       externalAnnotations="annotations.zip"
       proguardRules="proguard.txt"/>
   <library
-      name="com.adjust.signature:adjust-android-signature:3.67.0@aar"
-      jars="C:\.gradle\caches\9.0-milestone-1\transforms\e39fe05ce0b4f83044563a6c6a0df73e\transformed\adjust-android-signature-3.67.0\jars\classes.jar"
-      resolved="com.adjust.signature:adjust-android-signature:3.67.0"
-      folder="C:\.gradle\caches\9.0-milestone-1\transforms\e39fe05ce0b4f83044563a6c6a0df73e\transformed\adjust-android-signature-3.67.0"
-      manifest="AndroidManifest.xml"
-      resFolder="res"
-      assetsFolder="assets"
-      lintJar="lint.jar"
-      publicResources="public.txt"
-      symbolFile="R.txt"
-      externalAnnotations="annotations.zip"
-      proguardRules="proguard.txt"/>
-  <library
-      name="com.github.megatronking.stringfog:interface:5.0.0@jar"
-      jars="C:\.gradle\caches\modules-2\files-2.1\com.github.megatronking.stringfog\interface\5.0.0\f12499bfba2ebf09399c9e229a8080e46d3de172\interface-5.0.0.jar"
-      resolved="com.github.megatronking.stringfog:interface:5.0.0"/>
-  <library
       name="com.github.bumptech.glide:gifdecoder:5.0.7@aar"
       jars="C:\.gradle\caches\9.0-milestone-1\transforms\3d5bf623c354d29e9aceb3b7fa266d0d\transformed\gifdecoder-5.0.7\jars\classes.jar"
       resolved="com.github.bumptech.glide:gifdecoder:5.0.7"
@@ -684,6 +668,23 @@
       jars="C:\.gradle\caches\9.0-milestone-1\transforms\356e60278401af117bae58f08c96cec1\transformed\exifinterface-1.3.6\jars\classes.jar"
       resolved="androidx.exifinterface:exifinterface:1.3.6"
       folder="C:\.gradle\caches\9.0-milestone-1\transforms\356e60278401af117bae58f08c96cec1\transformed\exifinterface-1.3.6"
+      manifest="AndroidManifest.xml"
+      resFolder="res"
+      assetsFolder="assets"
+      lintJar="lint.jar"
+      publicResources="public.txt"
+      symbolFile="R.txt"
+      externalAnnotations="annotations.zip"
+      proguardRules="proguard.txt"/>
+  <library
+      name="com.github.megatronking.stringfog:interface:5.0.0@jar"
+      jars="C:\.gradle\caches\modules-2\files-2.1\com.github.megatronking.stringfog\interface\5.0.0\f12499bfba2ebf09399c9e229a8080e46d3de172\interface-5.0.0.jar"
+      resolved="com.github.megatronking.stringfog:interface:5.0.0"/>
+  <library
+      name="com.adjust.signature:adjust-android-signature:3.67.0@aar"
+      jars="C:\.gradle\caches\9.0-milestone-1\transforms\e39fe05ce0b4f83044563a6c6a0df73e\transformed\adjust-android-signature-3.67.0\jars\classes.jar"
+      resolved="com.adjust.signature:adjust-android-signature:3.67.0"
+      folder="C:\.gradle\caches\9.0-milestone-1\transforms\e39fe05ce0b4f83044563a6c6a0df73e\transformed\adjust-android-signature-3.67.0"
       manifest="AndroidManifest.xml"
       resFolder="res"
       assetsFolder="assets"

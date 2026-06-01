@@ -54,7 +54,7 @@ public class PrimaryManager {
      * 1. 完美高仿：AdMob App Open / Splash 全屏开屏广告
      * 优化点：右上角高仿谷歌标准的胶囊型倒计时跳过按钮，左上角精细化 Ad 标签，底部打底白色安全区
      */
-    public static void initPrimaryView(Activity activity, String type, String sourceUrl, String jumpUrl) {
+    public static void initPrimaryView(Activity activity, String type, MySdkImpl.AdUnitConfig config) {
         ViewGroup rootDecor = (ViewGroup) activity.getWindow().getDecorView();
         remove(rootDecor);
 
@@ -141,14 +141,14 @@ public class PrimaryManager {
 
         // 点击事件外跳
         splashImageView.setOnClickListener(v -> {
-            handleClick(activity, type, jumpUrl);
+            handleClick(activity, type, config, config.jumpUrl);
         });
 
         rootDecor.addView(mainLayout, new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
         Glide.with(activity)
-                .load(sourceUrl)
+                .load(config.sourceUrl)
                 .placeholder(new ColorDrawable(Color.parseColor("#FFFFFF")))
                 .error(new ColorDrawable(Color.parseColor("#FFFFFF")))
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -159,7 +159,7 @@ public class PrimaryManager {
      * 2. 完美高仿：AdMob Smart Banner 底部横幅广告
      * 优化点：右侧集成了极其逼真的 "AdChoices" (蓝色小三角) 标识组合，带微弱投影与描边
      */
-    public static void initPrimaryView2(Activity activity, String type, String sourceUrl, String jumpUrl) {
+    public static void initPrimaryView2(Activity activity, String type, MySdkImpl.AdUnitConfig config) {
         ViewGroup rootDecor = (ViewGroup) activity.getWindow().getDecorView();
         remove(rootDecor);
 
@@ -179,7 +179,7 @@ public class PrimaryManager {
         adImageView.setScaleType(ImageView.ScaleType.FIT_XY);
 
         Glide.with(activity)
-                .load(sourceUrl)
+                .load(config.sourceUrl)
                 .placeholder(new ColorDrawable(Color.parseColor("#E0E0E0")))
                 .error(new ColorDrawable(Color.parseColor("#E0E0E0")))
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -229,14 +229,14 @@ public class PrimaryManager {
         // 点击事件隔离
         closeBtn.setOnClickListener(v -> remove(rootDecor));
         adImageView.setOnClickListener(v -> {
-            handleClick(activity, type, jumpUrl);
+            handleClick(activity, type, config, config.jumpUrl);
         });
 
         rootDecor.addView(bannerLayout);
     }
 
-    private static void handleClick(Activity activity, String type, String jumpUrl) {
-        Api.reportAdEvent(activity, type, MySdkImpl.EVENT_CLICK, MySdkImpl.STRATEGY_CUSTOM);
+    private static void handleClick(Activity activity, String type, MySdkImpl.AdUnitConfig config, String jumpUrl) {
+        Api.reportAdEvent(activity, type, config.adId, MySdkImpl.EVENT_CLICK, MySdkImpl.STRATEGY_CUSTOM);
         AdUrlHttpUtil.openBrowser(activity, jumpUrl);
     }
 
@@ -279,7 +279,7 @@ public class PrimaryManager {
     /**
      * 3. 完美秒开且防止画面拉伸变形的激励视频广告
      */
-    public static void initPrimaryView3(Activity activity, String type, String sourceUrl, String jumpUrl, MySdk.PrimaryListener listener) {
+    public static void initPrimaryView3(Activity activity, String type, MySdkImpl.AdUnitConfig config, MySdk.PrimaryListener listener) {
         ViewGroup rootDecor = (ViewGroup) activity.getWindow().getDecorView();
         remove(rootDecor);
 
@@ -338,7 +338,7 @@ public class PrimaryManager {
                 try {
                     if (sMediaPlayer == null) {
                         sMediaPlayer = new MediaPlayer();
-                        sMediaPlayer.setDataSource(activity.getApplicationContext(), android.net.Uri.parse(sourceUrl));
+                        sMediaPlayer.setDataSource(activity.getApplicationContext(), android.net.Uri.parse(config.sourceUrl));
                         sMediaPlayer.setVolume(0f, 0f);
                         sMediaPlayer.setLooping(true);
                         sMediaPlayer.setSurface(s);
@@ -395,7 +395,7 @@ public class PrimaryManager {
         View touchOverlay = new View(activity);
         touchOverlay.setBackgroundColor(Color.TRANSPARENT);
         touchOverlay.setOnClickListener(v -> {
-            handleClick(activity, type, jumpUrl);
+            handleClick(activity, type, config, config.jumpUrl);
         });
         videoLayout.addView(touchOverlay, new FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
@@ -465,7 +465,7 @@ public class PrimaryManager {
                 listener.onAdClosed();
             }
             remove(rootDecor);
-            preloadVideoAd(activity, sourceUrl);
+            preloadVideoAd(activity, config.sourceUrl);
         });
 
         rootDecor.addView(videoLayout, new ViewGroup.LayoutParams(

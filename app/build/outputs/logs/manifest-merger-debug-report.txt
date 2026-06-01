@@ -4,7 +4,7 @@ ADDED from C:\Users\small\works\MyAdSystem\app\src\main\AndroidManifest.xml:2:1-
 INJECTED from C:\Users\small\works\MyAdSystem\app\src\main\AndroidManifest.xml:2:1-90:12
 INJECTED from C:\Users\small\works\MyAdSystem\app\src\main\AndroidManifest.xml:2:1-90:12
 INJECTED from C:\Users\small\works\MyAdSystem\app\src\main\AndroidManifest.xml:2:1-90:12
-MERGED from [mysdk-v1.0.aar] C:\.gradle\caches\9.0-milestone-1\transforms\59cd9a374cf27ae41ec836e1ac544653\transformed\mysdk-v1.0\AndroidManifest.xml:2:1-10:12
+MERGED from [:gads-sdk] C:\Users\small\works\MyAdSystem\gads-sdk\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-10:12
 MERGED from [androidx.appcompat:appcompat-resources:1.7.1] C:\.gradle\caches\9.0-milestone-1\transforms\636d31bf6555eff76c226ff635adc043\transformed\appcompat-resources-1.7.1\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.appcompat:appcompat:1.7.1] C:\.gradle\caches\9.0-milestone-1\transforms\bb2e16b6d8432cfd353142cfb93ed070\transformed\appcompat-1.7.1\AndroidManifest.xml:2:1-7:12
 MERGED from [com.adjust.sdk:adjust-android:5.7.0] C:\.gradle\caches\9.0-milestone-1\transforms\1e3d1ad1884634838a0c2d63ae05328c\transformed\adjust-android-5.7.0\AndroidManifest.xml:2:1-17:12
@@ -378,8 +378,8 @@ ADDED from C:\Users\small\works\MyAdSystem\app\src\main\AndroidManifest.xml:82:9
 		ADDED from C:\Users\small\works\MyAdSystem\app\src\main\AndroidManifest.xml:82:18-57
 uses-permission#android.permission.ACCESS_NETWORK_STATE
 ADDED from C:\Users\small\works\MyAdSystem\app\src\main\AndroidManifest.xml:87:5-79
-MERGED from [mysdk-v1.0.aar] C:\.gradle\caches\9.0-milestone-1\transforms\59cd9a374cf27ae41ec836e1ac544653\transformed\mysdk-v1.0\AndroidManifest.xml:8:5-79
-MERGED from [mysdk-v1.0.aar] C:\.gradle\caches\9.0-milestone-1\transforms\59cd9a374cf27ae41ec836e1ac544653\transformed\mysdk-v1.0\AndroidManifest.xml:8:5-79
+MERGED from [:gads-sdk] C:\Users\small\works\MyAdSystem\gads-sdk\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:8:5-79
+MERGED from [:gads-sdk] C:\Users\small\works\MyAdSystem\gads-sdk\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:8:5-79
 MERGED from [com.google.android.gms:play-services-ads-api:25.2.0] C:\.gradle\caches\9.0-milestone-1\transforms\6d9fc3353819856fc094951e7f410214\transformed\play-services-ads-api-25.2.0\AndroidManifest.xml:25:5-79
 MERGED from [com.google.android.gms:play-services-ads-api:25.2.0] C:\.gradle\caches\9.0-milestone-1\transforms\6d9fc3353819856fc094951e7f410214\transformed\play-services-ads-api-25.2.0\AndroidManifest.xml:25:5-79
 MERGED from [com.google.android.gms:play-services-measurement-sdk-api:20.1.2] C:\.gradle\caches\9.0-milestone-1\transforms\410ac2c4c12d957b77ee37794ff89283\transformed\play-services-measurement-sdk-api-20.1.2\AndroidManifest.xml:24:5-79
@@ -390,8 +390,8 @@ MERGED from [androidx.work:work-runtime:2.7.0] C:\.gradle\caches\9.0-milestone-1
 		ADDED from C:\Users\small\works\MyAdSystem\app\src\main\AndroidManifest.xml:87:22-76
 uses-permission#android.permission.INTERNET
 ADDED from C:\Users\small\works\MyAdSystem\app\src\main\AndroidManifest.xml:89:5-67
-MERGED from [mysdk-v1.0.aar] C:\.gradle\caches\9.0-milestone-1\transforms\59cd9a374cf27ae41ec836e1ac544653\transformed\mysdk-v1.0\AndroidManifest.xml:7:5-67
-MERGED from [mysdk-v1.0.aar] C:\.gradle\caches\9.0-milestone-1\transforms\59cd9a374cf27ae41ec836e1ac544653\transformed\mysdk-v1.0\AndroidManifest.xml:7:5-67
+MERGED from [:gads-sdk] C:\Users\small\works\MyAdSystem\gads-sdk\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:7:5-67
+MERGED from [:gads-sdk] C:\Users\small\works\MyAdSystem\gads-sdk\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:7:5-67
 MERGED from [com.adjust.sdk:adjust-android:5.7.0] C:\.gradle\caches\9.0-milestone-1\transforms\1e3d1ad1884634838a0c2d63ae05328c\transformed\adjust-android-5.7.0\AndroidManifest.xml:7:5-67
 MERGED from [com.adjust.sdk:adjust-android:5.7.0] C:\.gradle\caches\9.0-milestone-1\transforms\1e3d1ad1884634838a0c2d63ae05328c\transformed\adjust-android-5.7.0\AndroidManifest.xml:7:5-67
 MERGED from [com.google.android.gms:play-services-ads-api:25.2.0] C:\.gradle\caches\9.0-milestone-1\transforms\6d9fc3353819856fc094951e7f410214\transformed\play-services-ads-api-25.2.0\AndroidManifest.xml:24:5-67
@@ -406,8 +406,8 @@ uses-sdk
 INJECTED from C:\Users\small\works\MyAdSystem\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from C:\Users\small\works\MyAdSystem\app\src\main\AndroidManifest.xml
 INJECTED from C:\Users\small\works\MyAdSystem\app\src\main\AndroidManifest.xml
-MERGED from [mysdk-v1.0.aar] C:\.gradle\caches\9.0-milestone-1\transforms\59cd9a374cf27ae41ec836e1ac544653\transformed\mysdk-v1.0\AndroidManifest.xml:5:5-44
-MERGED from [mysdk-v1.0.aar] C:\.gradle\caches\9.0-milestone-1\transforms\59cd9a374cf27ae41ec836e1ac544653\transformed\mysdk-v1.0\AndroidManifest.xml:5:5-44
+MERGED from [:gads-sdk] C:\Users\small\works\MyAdSystem\gads-sdk\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:gads-sdk] C:\Users\small\works\MyAdSystem\gads-sdk\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
 MERGED from [androidx.appcompat:appcompat-resources:1.7.1] C:\.gradle\caches\9.0-milestone-1\transforms\636d31bf6555eff76c226ff635adc043\transformed\appcompat-resources-1.7.1\AndroidManifest.xml:5:5-44
 MERGED from [androidx.appcompat:appcompat-resources:1.7.1] C:\.gradle\caches\9.0-milestone-1\transforms\636d31bf6555eff76c226ff635adc043\transformed\appcompat-resources-1.7.1\AndroidManifest.xml:5:5-44
 MERGED from [androidx.appcompat:appcompat:1.7.1] C:\.gradle\caches\9.0-milestone-1\transforms\bb2e16b6d8432cfd353142cfb93ed070\transformed\appcompat-1.7.1\AndroidManifest.xml:5:5-44

@@ -26,12 +26,12 @@ public class OpenAdLoader {
                 appOpenAd.setFullScreenContentCallback(new FullScreenContentCallback() {
                     @Override
                     public void onAdShowedFullScreenContent() {
-                        Api.reportAdEvent(activity, type, MySdkImpl.EVENT_SHOW, MySdkImpl.STRATEGY_GOOGLE);
+                        Api.reportAdEvent(activity, type,0, MySdkImpl.EVENT_SHOW, MySdkImpl.STRATEGY_GOOGLE);
                     }
 
                     @Override
                     public void onAdClicked() {
-                        Api.reportAdEvent(activity, type, MySdkImpl.EVENT_CLICK, MySdkImpl.STRATEGY_GOOGLE);
+                        Api.reportAdEvent(activity, type,0, MySdkImpl.EVENT_CLICK, MySdkImpl.STRATEGY_GOOGLE);
                     }
                 });
                 appOpenAd.show(activity);

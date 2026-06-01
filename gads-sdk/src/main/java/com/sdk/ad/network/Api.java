@@ -57,17 +57,15 @@ public class Api {
                             JSONObject responseJson = new JSONObject(encryptedResponseBody);
                             if (responseJson.optInt("code", -1) == 200) {
                                 String data = responseJson.optString("data");
-                                Log.e(LOG_TAG, "初始化返回数据data：" + data);
                                 if (!TextUtils.isEmpty(data)) {
                                     String decryptedJsonStr = XXTeaUtil.decryptFromBase64String(data, MySdkImpl.APP_ID);
                                     Log.e(LOG_TAG, "初始化返回数据解密：" + decryptedJsonStr);
 
                                     JSONObject dataNode = new JSONObject(decryptedJsonStr);
                                     String openUdid = dataNode.optString("open_udid", "");
-                                    Log.e(LOG_TAG, "初始化返回数据解密 open_udid：" + openUdid);
+                                    Log.e(LOG_TAG, "初始化返回open_udid：" + openUdid);
 
                                     JSONObject adDelivery = dataNode.optJSONObject("ad_delivery");
-                                    Log.e(LOG_TAG, "初始化返回数据解密 adDelivery：" + adDelivery);
 
                                     if (!TextUtils.isEmpty(openUdid)) {
                                         // 缓存策略数据
@@ -107,9 +105,8 @@ public class Api {
     /**
      * 接口二：全平台通用的展示/点击事件埋点数据上报
      */
-    public static void reportAdEvent(Context context, String adType, String event, String strategy) {
+    public static void reportAdEvent(Context context, String adType, int adId, String event, String strategy) {
         NetworkManager.getInstance().getExecutor().execute(() -> {
-            Log.e(LOG_TAG, "上报广告数据：adType：" + adType + ",event：" + event + ",strategy：" + strategy);
             try {
                 JSONObject trackItem = new JSONObject();
                 trackItem.put("app_id", MySdkImpl.APP_ID);
@@ -117,9 +114,11 @@ public class Api {
                 trackItem.put("open_udid", StorageManager.getOpenUdid(context));
                 trackItem.put("gaid", DeviceUtils.getGaid(context));
                 trackItem.put("ad_type", adType);
+                trackItem.put("ad_id", adId);
                 trackItem.put("event", event);
                 trackItem.put("strategy", strategy);
                 trackItem.put("timestamp", System.currentTimeMillis());
+                Log.d(LOG_TAG, "上报广告数据：" + trackItem);
 
                 OfflineReportQueue.getInstance().submitEvent(context, trackItem);
             } catch (Exception e) {

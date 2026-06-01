@@ -48,11 +48,8 @@ public class XXTeaUtil {
         }
         try {
             String cleanedBase64 = base64Str.replaceAll("\\s", "");
-            Log.e(LOG_TAG, "cleanedBase64：" + cleanedBase64);
             byte[] cipherBytes = Base64.getDecoder().decode(cleanedBase64);
-            Log.e(LOG_TAG, "cipherBytes：" + Arrays.toString(cipherBytes));
             byte[] decryptedBytes = decrypt(cipherBytes, key.getBytes(StandardCharsets.UTF_8));
-            Log.e(LOG_TAG, "decryptedBytes：" + Arrays.toString(decryptedBytes));
 
             if (decryptedBytes == null) return "";
             return new String(decryptedBytes, StandardCharsets.UTF_8);

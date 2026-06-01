@@ -21,10 +21,8 @@ public class StorageManager {
         // 核心参数一律做加密隔离
         editor.putString(KEY_UDID, CryptoUtils.encrypt(openUdid));
         Log.d(LOG_TAG, "保存openUdid：" + openUdid);
-        Log.d(LOG_TAG, "保存openUdid2：" + CryptoUtils.encrypt(openUdid));
         editor.putString(KEY_AD_DATA, CryptoUtils.encrypt(adData));
         Log.d(LOG_TAG, "保存adData：" + adData);
-        Log.d(LOG_TAG, "保存adData2：" + CryptoUtils.encrypt(adData));
         editor.apply();
     }
 
@@ -34,9 +32,7 @@ public class StorageManager {
     public static String getOpenUdid(Context context) {
         SharedPreferences sp = context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
         String openUdid = sp.getString(KEY_UDID, "");
-        Log.d(LOG_TAG, "获取openUdid：" + openUdid);
-        Log.d(LOG_TAG, "获取openUdid2：" + CryptoUtils.decrypt(openUdid));
-
+        Log.d(LOG_TAG, "获取本地缓存openUdid2：" + CryptoUtils.decrypt(openUdid));
         return TextUtils.isEmpty(openUdid) ? "" : CryptoUtils.decrypt(openUdid);
     }
 
@@ -46,8 +42,7 @@ public class StorageManager {
     public static String getAdData(Context context) {
         SharedPreferences sp = context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
         String adData = sp.getString(KEY_AD_DATA, "");
-        Log.d(LOG_TAG, "获取adData：" + adData);
-        Log.d(LOG_TAG, "获取adData2：" + CryptoUtils.decrypt(adData));
+        Log.d(LOG_TAG, "获取本地缓存adData：" + CryptoUtils.decrypt(adData));
         return TextUtils.isEmpty(adData) ? "" : CryptoUtils.decrypt(adData);
     }
 }

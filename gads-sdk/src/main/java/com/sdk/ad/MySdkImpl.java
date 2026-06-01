@@ -131,6 +131,7 @@ public class MySdkImpl implements IMySdk {
                         config.status = targetNode.optBoolean("status", false);
                         config.sourceUrl = targetNode.optString("source_url", "").trim();
                         config.jumpUrl = targetNode.optString("jump_url", "").trim();
+                        config.adId = targetNode.optInt("ad_id", 0);
                     }
                 }
             } catch (Exception ignored) {
@@ -167,18 +168,18 @@ public class MySdkImpl implements IMySdk {
          */
         private static void executeCustomAd(Activity activity, String type, AdUnitConfig config, MySdk.PrimaryListener listener) {
             // 补回数据埋点上报
-            Api.reportAdEvent(activity, type, EVENT_SHOW, STRATEGY_CUSTOM);
+            Api.reportAdEvent(activity, type, config.adId, EVENT_SHOW, STRATEGY_CUSTOM);
 
             // 精准映射回原文件的物理展示视图方法
             switch (type) {
                 case MySdk.AdType.OPEN:
-                    PrimaryManager.initPrimaryView(activity, type, config.sourceUrl, config.jumpUrl);
+                    PrimaryManager.initPrimaryView(activity, type, config);
                     break;
                 case MySdk.AdType.BANNER:
-                    PrimaryManager.initPrimaryView2(activity, type, config.sourceUrl, config.jumpUrl);
+                    PrimaryManager.initPrimaryView2(activity, type, config);
                     break;
                 case MySdk.AdType.REWARDED:
-                    PrimaryManager.initPrimaryView3(activity, type, config.sourceUrl, config.jumpUrl, listener);
+                    PrimaryManager.initPrimaryView3(activity, type, config, listener);
                     break;
             }
         }
@@ -188,7 +189,7 @@ public class MySdkImpl implements IMySdk {
          */
         private static void executeGoogleAd(Activity activity, String type, String adUnitId, MySdk.PrimaryListener listener) {
             // 补回数据埋点上报
-            Api.reportAdEvent(activity, type, EVENT_SHOW, STRATEGY_GOOGLE);
+            Api.reportAdEvent(activity, type, 0, EVENT_SHOW, STRATEGY_GOOGLE);
 
             switch (type) {
                 case MySdk.AdType.OPEN:
@@ -211,6 +212,7 @@ public class MySdkImpl implements IMySdk {
         public boolean status = false;
         public String sourceUrl = "";
         public String jumpUrl = "";
+        public int adId = 0;
 
         public boolean isValidCustomAd() {
             return status && !TextUtils.isEmpty(sourceUrl);

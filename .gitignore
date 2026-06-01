@@ -10,3 +10,4 @@ captures/
 *.apk
 /app/release/
 /app/.cxx/
+/.gradle/

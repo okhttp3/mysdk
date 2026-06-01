@@ -58,7 +58,7 @@ public class BannerAdLoader {
                     // 加载成功后，才把外壳容器塞进 DecorView，实现平滑无感展现
                     if (container.getParent() == null) {
                         rootDecor.addView(container);
-                        Api.reportAdEvent(activity, type, MySdkImpl.EVENT_SHOW, MySdkImpl.STRATEGY_GOOGLE);
+                        Api.reportAdEvent(activity, type, 0, MySdkImpl.EVENT_SHOW, MySdkImpl.STRATEGY_GOOGLE);
                     }
                 }
 
@@ -72,7 +72,7 @@ public class BannerAdLoader {
                 @Override
                 public void onAdClicked() {
                     super.onAdClicked();
-                    Api.reportAdEvent(activity, type, MySdkImpl.EVENT_CLICK, MySdkImpl.STRATEGY_GOOGLE);
+                    Api.reportAdEvent(activity, type, 0, MySdkImpl.EVENT_CLICK, MySdkImpl.STRATEGY_GOOGLE);
                 }
             });
 

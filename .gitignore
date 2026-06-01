@@ -1,13 +1,25 @@
+# ====== 开发工具与配置文件 (重点修复) ======
 *.iml
-.gradle/
-build/
+**/*.iml
 .idea/
-idea/
-local.properties
-proguardMapping.txt
-captures/
 /.idea/
-*.apk
-/app/release/
-/app/.cxx/
+.gradle/
 /.gradle/
+local.properties
+
+# ====== 编译产物与缓存 ======
+build/
+**/build/
+*.apk
+*.ap_
+*.aab
+
+# ====== NDK & C++ 缓存 (防止底层模块编译卡顿) ======
+.cxx/
+**/ .cxx/
+ndkBuild/
+
+# ====== 日志、映射与快照 ======
+captures/
+proguardMapping.txt
+*.log

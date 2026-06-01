@@ -10,6 +10,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.TextureView;
@@ -26,6 +27,8 @@ import com.sdk.ad.MySdk;
 import com.sdk.ad.MySdkImpl;
 import com.sdk.ad.network.Api;
 import com.sdk.ad.util.AdUrlHttpUtil;
+
+import static com.sdk.ad.MySdkImpl.LOG_TAG;
 
 public class PrimaryManager {
     public static final String TAG_INTERNAL_LAYOUT_ROOT = "tag_internal_layout_root";
@@ -262,22 +265,25 @@ public class PrimaryManager {
 
                 sMediaPlayer.setOnPreparedListener(mp -> {
                     sIsVideoReady = true; // 真正缓冲完毕，后台处于就绪/暂停状态
+                    Log.e(LOG_TAG, "视频激励广告，预加载缓冲完毕，后台处于就绪/暂停状态");
                 });
 
                 sMediaPlayer.setOnErrorListener((mp, what, extra) -> {
+                    Log.e(LOG_TAG, "视频激励广告，预加载缓冲错误");
                     releasePlayer();
                     return true;
                 });
 
                 sMediaPlayer.prepareAsync(); // 异步准备
             } catch (Exception e) {
+                Log.e(LOG_TAG, "视频激励广告，预加载缓冲报错：" + e.toString());
                 releasePlayer();
             }
         });
     }
 
     /**
-     * 3. 完美秒开且防止画面拉伸变形的激励视频广告
+     * 3. 完美秒开且防止画面拉伸变形的激励视频广告 (内存常驻复用版)
      */
     public static void initPrimaryView3(Activity activity, String type, MySdkImpl.AdUnitConfig config, MySdk.PrimaryListener listener) {
         ViewGroup rootDecor = (ViewGroup) activity.getWindow().getDecorView();
@@ -285,17 +291,15 @@ public class PrimaryManager {
 
         FrameLayout videoLayout = new FrameLayout(activity);
         videoLayout.setTag(TAG_INTERNAL_LAYOUT_ROOT);
-        videoLayout.setBackgroundColor(Color.BLACK); // 留黑边底色
+        videoLayout.setBackgroundColor(Color.BLACK);
         videoLayout.setClickable(true);
 
         TextureView textureView = new TextureView(activity);
 
-        // ==================== 【新增核心：自适应画面比例适配】 ====================
-        // 定义一个负责等比例缩放的方法
+        // 自适应画面比例适配逻辑
         final Runnable adaptVideoSize = () -> {
             if (sMediaPlayer == null || textureView.getWidth() == 0 || textureView.getHeight() == 0)
                 return;
-
             try {
                 int videoWidth = sMediaPlayer.getVideoWidth();
                 int videoHeight = sMediaPlayer.getVideoHeight();
@@ -308,24 +312,18 @@ public class PrimaryManager {
                     viewHeight = activity.getResources().getDisplayMetrics().heightPixels;
                 }
 
-                // 计算缩放比例
                 double videoAspect = (double) videoWidth / videoHeight;
                 double viewAspect = (double) viewWidth / viewHeight;
-
                 FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) textureView.getLayoutParams();
 
-                // 🎯 策略：等比例自适应，四周留黑边 (高仿 AdMob 效果)
                 if (videoAspect > viewAspect) {
-                    // 视频太宽了，以宽度为准，对高度进行缩放
                     lp.width = viewWidth;
                     lp.height = (int) (viewWidth / videoAspect);
                 } else {
-                    // 视频太高了（或者是竖屏短视频），以高度为准，对宽度进行缩放
                     lp.height = viewHeight;
                     lp.width = (int) (viewHeight * videoAspect);
                 }
-
-                lp.gravity = Gravity.CENTER; // 居中对齐
+                lp.gravity = Gravity.CENTER;
                 textureView.setLayoutParams(lp);
             } catch (Exception ignored) {
             }
@@ -336,6 +334,7 @@ public class PrimaryManager {
             public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
                 android.view.Surface s = new android.view.Surface(surface);
                 try {
+                    // 如果全局单例由于系统原因挂了或未初始化，走保底初始化
                     if (sMediaPlayer == null) {
                         sMediaPlayer = new MediaPlayer();
                         sMediaPlayer.setDataSource(activity.getApplicationContext(), android.net.Uri.parse(config.sourceUrl));
@@ -343,38 +342,45 @@ public class PrimaryManager {
                         sMediaPlayer.setLooping(true);
                         sMediaPlayer.setSurface(s);
                         sMediaPlayer.setOnPreparedListener(mp -> {
+                            sIsVideoReady = true;
                             sMediaPlayer.start();
-                            activity.runOnUiThread(adaptVideoSize); // 拿到视频尺寸后适配
+                            activity.runOnUiThread(adaptVideoSize);
                         });
                         sMediaPlayer.prepareAsync();
                     } else {
+                        // 【核心改动】：动态绑定最新生成的 Surface
                         sMediaPlayer.setSurface(s);
-                        // 监听视频尺寸变更（以防后台还没准备完毕时直接读取宽高拿到0）
                         sMediaPlayer.setOnVideoSizeChangedListener((mp, vW, vH) -> adaptVideoSize.run());
 
                         if (sIsVideoReady) {
-                            sMediaPlayer.start();
-                            adaptVideoSize.run(); // 已经是 Ready 状态，直接触发计算
+                            sMediaPlayer.start(); // 此时进度在 0，直接瞬间开播
+                            adaptVideoSize.run();
                         } else {
                             sMediaPlayer.setOnPreparedListener(mp -> {
+                                sIsVideoReady = true;
                                 sMediaPlayer.start();
                                 adaptVideoSize.run();
                             });
                         }
                     }
-                } catch (Exception ignored) {
+                } catch (Exception e) {
+                    Log.e(LOG_TAG, "绑定Surface或播放失败: " + e.getMessage());
                 }
             }
 
             @Override
             public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
-                adaptVideoSize.run(); // 屏幕发生旋转或者尺寸微调时再次修正
+                adaptVideoSize.run();
             }
 
             @Override
             public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
+                // 当旧界面关闭、视图销毁时，切断底层 MediaPlayer 与当前 Surface 的连带关系
                 if (sMediaPlayer != null) {
-                    sMediaPlayer.setSurface(null);
+                    try {
+                        sMediaPlayer.setSurface(null);
+                    } catch (Exception ignored) {
+                    }
                 }
                 return true;
             }
@@ -384,23 +390,19 @@ public class PrimaryManager {
             }
         });
 
-        // 初始给 MATCH_PARENT，等监听到视频实际宽高后会被上面的适配算法强行修回正确比例
         FrameLayout.LayoutParams videoParams = new FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         videoParams.gravity = Gravity.CENTER;
         videoLayout.addView(textureView, videoParams);
-        // ====================================================================
 
-        // 点击外跳透明层
+        // 透明点击外跳层
         View touchOverlay = new View(activity);
         touchOverlay.setBackgroundColor(Color.TRANSPARENT);
-        touchOverlay.setOnClickListener(v -> {
-            handleClick(activity, type, config, config.jumpUrl);
-        });
+        touchOverlay.setOnClickListener(v -> handleClick(activity, type, config, config.jumpUrl));
         videoLayout.addView(touchOverlay, new FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
-        // 左上角倒计时块
+        // 左上角倒计时
         TextView timerView = new TextView(activity);
         timerView.setTextColor(Color.WHITE);
         timerView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13);
@@ -408,7 +410,7 @@ public class PrimaryManager {
         timerBg.setShape(GradientDrawable.RECTANGLE);
         timerBg.setColor(Color.parseColor("#80000000"));
         int radius = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 15, activity.getResources().getDisplayMetrics());
-        timerBg.setCornerRadius(radius); // 修复修复
+        timerBg.setCornerRadius(radius);
         timerView.setBackground(timerBg);
         int paddingHor = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 14, activity.getResources().getDisplayMetrics());
         int paddingVer = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 6, activity.getResources().getDisplayMetrics());
@@ -429,7 +431,7 @@ public class PrimaryManager {
         GradientDrawable closeBg = new GradientDrawable();
         closeBg.setShape(GradientDrawable.RECTANGLE);
         closeBg.setColor(Color.parseColor("#A0000000"));
-        closeBg.setCornerRadius((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 18, activity.getResources().getDisplayMetrics())); // 修复修复
+        closeBg.setCornerRadius((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 18, activity.getResources().getDisplayMetrics()));
         closeBtn.setBackground(closeBg);
         int btnSize = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 36, activity.getResources().getDisplayMetrics());
         FrameLayout.LayoutParams closeParams = new FrameLayout.LayoutParams(btnSize, btnSize);
@@ -459,13 +461,25 @@ public class PrimaryManager {
         });
 
         closeBtn.setOnClickListener(v -> {
-            releasePlayer();
-            if (listener != null) {
-                if (isRewardEarned[0]) listener.onAdRewarded();
-                listener.onAdClosed();
+            // 优雅回收：不销毁 Player，只暂停、归零进度，为下次秒开做准备
+            try {
+                if (sMediaPlayer != null) {
+                    sMediaPlayer.pause();
+                    sMediaPlayer.seekTo(0);
+                    Log.e(LOG_TAG, "视频激励广告已关闭，保留MediaPlayer实例，进度回滚至0");
+                }
+            } catch (Exception exception) {
+                Log.e(LOG_TAG, "视频激励广告关闭暂停报错：" + exception);
             }
+
             remove(rootDecor);
-            preloadVideoAd(activity, config.sourceUrl);
+            if (listener != null) {
+                if (isRewardEarned[0]) {
+                    listener.onAdRewarded();
+                } else {
+                    listener.onAdClosed();
+                }
+            }
         });
 
         rootDecor.addView(videoLayout, new ViewGroup.LayoutParams(
@@ -473,6 +487,8 @@ public class PrimaryManager {
     }
 
     private static void releasePlayer() {
+        Log.e(LOG_TAG, "视频激励广告释放资源releasePlayer");
+
         try {
             if (sMediaPlayer != null) {
                 sMediaPlayer.stop();

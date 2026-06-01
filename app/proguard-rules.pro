@@ -5,6 +5,9 @@
 -dontoptimize
 -dontshrink
 -allowaccessmodification
+-flattenpackagehierarchy
+-useuniqueclassmembernames
+-dontskipnonpubliclibraryclassmembers
 -keepattributes *Annotation*
 -keepattributes Exceptions
 -keepattributes JavascriptInterface
@@ -12,31 +15,16 @@
 -keepattributes Signature
 -keepattributes SourceFile
 
--keep public class * extends android.app.Activity
--keep public class * extends android.app.Application
--keep public class * extends android.app.Service
--keep public class * extends android.content.BroadcastReceiver
--keep public class * extends android.content.ContentProvider
-
-
--flattenpackagehierarchy
--useuniqueclassmembernames
--dontusemixedcaseclassnames
--dontskipnonpubliclibraryclasses
--dontskipnonpubliclibraryclassmembers
-
 -dontwarn android.**
+-dontwarn com.google.**
 -keep class android.** { *; }
 -keepattributes *Annotation*,InnerClasses
 -keepattributes Signature
 -keepattributes SourceFile,LineNumberTable,Deprecated
-# ------------------------------- 基本指令区 -------------------------------
-
 
 # 保留四大组件
 -keep public class * extends android.app.Activity
 -keep public class * extends android.content.BroadcastReceiver
-# 保留就保证layout中定义的onClick方法不影响
 -keepclassmembers class * extends android.app.Activity{
     public void *(android.view.View);
 }
@@ -45,18 +33,14 @@
 -keep public class * extends android.content.ContentProvider
 -keep public class * extends android.app.Application
 
--dontwarn okhttp3.**
--dontwarn com.google.**
-
 # okhttp3
 -keep class okhttp3.** { *; }
 -keep interface okhttp3.** { *; }
 -dontwarn okhttp3.**
 
 # Adjust
--keep public class com.adjust.sdk.**{ *; }
--keep public class com.android.installreferrer.**{ *; }
 -keep class com.adjust.sdk.**{ *; }
+-keep public class com.android.installreferrer.**{ *; }
 -keep class com.google.android.gms.common.ConnectionResult {
     int SUCCESS;
 }

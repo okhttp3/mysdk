@@ -46,12 +46,12 @@ android {
 }
 
 dependencies {
-
-    implementation project(':gads-sdk')
-
     implementation 'androidx.appcompat:appcompat:1.7.1'
-
+    // 直接测module用这个
+    implementation project(':gads-sdk')
+    // 打包测sdk用这个，替换libs的aar
 //    api fileTree(dir: 'libs', include: ['*.aar', '*.jar'])
+
     implementation 'com.adjust.sdk:adjust-android:5.7.0'
     implementation 'com.github.megatronking.stringfog:xor:5.0.0'
     implementation("com.google.android.gms:play-services-ads:25.2.0")

@@ -103,14 +103,19 @@ public class MySdkImpl implements IMySdk {
     @Override
     public void showAd(Activity activity, String type, String adUnitId, MySdk.PrimaryListener listener) {
         if (activity == null || activity.isFinishing() || TextUtils.isEmpty(type)) return;
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Log.d(LOG_TAG, "游戏触发 showAd -> 类型: " + type + " | SDK状态: " + mInitState);
 
-        Log.d(LOG_TAG, "游戏触发 showAd -> 类型: " + type + " | SDK状态: " + mInitState);
+                // 实时获取配置实体
+                AdUnitConfig config = ConfigManager.getAdUnitConfig(activity, type);
 
-        // 实时获取配置实体
-        AdUnitConfig config = ConfigManager.getAdUnitConfig(activity, type);
+                // 交给专职的路由分发器进行策略渲染与事件上报
+                AdRouter.dispatch(activity, type, adUnitId, listener, config);
+            }
+        });
 
-        // 交给专职的路由分发器进行策略渲染与事件上报
-        AdRouter.dispatch(activity, type, adUnitId, listener, config);
     }
 
     // =========================================================================

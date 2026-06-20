@@ -284,6 +284,7 @@ public class PrimaryManager {
 
     /**
      * 3. 完美秒开且防止画面拉伸变形的激励视频广告 (内存常驻复用版)
+     * 修改点：关闭按钮默认可见，允许随时关闭；满足15秒条件才发放奖励
      */
     public static void initPrimaryView3(Activity activity, String type, MySdkImpl.AdUnitConfig config, MySdk.PrimaryListener listener) {
         ViewGroup rootDecor = (ViewGroup) activity.getWindow().getDecorView();
@@ -334,7 +335,6 @@ public class PrimaryManager {
             public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
                 android.view.Surface s = new android.view.Surface(surface);
                 try {
-                    // 如果全局单例由于系统原因挂了或未初始化，走保底初始化
                     if (sMediaPlayer == null) {
                         sMediaPlayer = new MediaPlayer();
                         sMediaPlayer.setDataSource(activity.getApplicationContext(), android.net.Uri.parse(config.sourceUrl));
@@ -348,20 +348,18 @@ public class PrimaryManager {
                         });
                         sMediaPlayer.prepareAsync();
                     } else {
-                        // 【核心改动】：动态绑定最新生成的 Surface
+                        // 针对常驻复用的 MediaPlayer
                         sMediaPlayer.setSurface(s);
                         sMediaPlayer.setOnVideoSizeChangedListener((mp, vW, vH) -> adaptVideoSize.run());
 
-                        if (sIsVideoReady) {
-                            sMediaPlayer.start(); // 此时进度在 0，直接瞬间开播
+                        // 设置定位完成监听，确保第一帧在新的 Surface 上渲染完毕后再开播
+                        sMediaPlayer.setOnSeekCompleteListener(mp -> {
+                            sMediaPlayer.start();
                             adaptVideoSize.run();
-                        } else {
-                            sMediaPlayer.setOnPreparedListener(mp -> {
-                                sIsVideoReady = true;
-                                sMediaPlayer.start();
-                                adaptVideoSize.run();
-                            });
-                        }
+                        });
+
+                        // 无论是播完的还是播到一半关闭的，统一在这里画面就绪后回滚到 0 帧
+                        sMediaPlayer.seekTo(0);
                     }
                 } catch (Exception e) {
                     Log.e(LOG_TAG, "绑定Surface或播放失败: " + e.getMessage());
@@ -375,7 +373,6 @@ public class PrimaryManager {
 
             @Override
             public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
-                // 当旧界面关闭、视图销毁时，切断底层 MediaPlayer 与当前 Surface 的连带关系
                 if (sMediaPlayer != null) {
                     try {
                         sMediaPlayer.setSurface(null);
@@ -427,7 +424,8 @@ public class PrimaryManager {
         closeBtn.setTextColor(Color.WHITE);
         closeBtn.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
         closeBtn.setGravity(Gravity.CENTER);
-        closeBtn.setVisibility(View.GONE);
+        // 【修改点】让关闭按钮从一开始就直接可见
+        closeBtn.setVisibility(View.VISIBLE);
         GradientDrawable closeBg = new GradientDrawable();
         closeBg.setShape(GradientDrawable.RECTANGLE);
         closeBg.setColor(Color.parseColor("#A0000000"));
@@ -455,31 +453,33 @@ public class PrimaryManager {
                 } else {
                     isRewardEarned[0] = true;
                     timerView.setText("Reward granted ✓");
-                    closeBtn.setVisibility(View.VISIBLE);
                 }
             }
         });
 
         closeBtn.setOnClickListener(v -> {
-            // 优雅回收：不销毁 Player，只暂停、归零进度，为下次秒开做准备
-            try {
-                if (sMediaPlayer != null) {
-                    sMediaPlayer.pause();
-                    sMediaPlayer.seekTo(0);
-                    Log.e(LOG_TAG, "视频激励广告已关闭，保留MediaPlayer实例，进度回滚至0");
-                }
-            } catch (Exception exception) {
-                Log.e(LOG_TAG, "视频激励广告关闭暂停报错：" + exception);
-            }
-
             remove(rootDecor);
-            if (listener != null) {
-                if (isRewardEarned[0]) {
-                    listener.onAdRewarded();
-                } else {
-                    listener.onAdClosed();
+            uiHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        if (sMediaPlayer != null) {
+                            sMediaPlayer.pause(); // 只暂停，不在这里 seekTo(0)
+                            Log.e(LOG_TAG, "视频激励广告已关闭，保留MediaPlayer实例并暂停");
+                        }
+                    } catch (Exception exception) {
+                        Log.e(LOG_TAG, "视频激励广告关闭暂停报错：" + exception);
+                    }
+
+                    if (listener != null) {
+                        if (isRewardEarned[0]) {
+                            listener.onAdRewarded();
+                        } else {
+                            listener.onAdClosed();
+                        }
+                    }
                 }
-            }
+            });
         });
 
         rootDecor.addView(videoLayout, new ViewGroup.LayoutParams(

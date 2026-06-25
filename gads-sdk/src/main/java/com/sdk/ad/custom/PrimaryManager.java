@@ -8,6 +8,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -16,6 +17,7 @@ import android.view.Gravity;
 import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowInsets;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -159,29 +161,35 @@ public class PrimaryManager {
     }
 
     private static void closeOpen(MySdk.PrimaryListener listener, ViewGroup rootDecor) {
+        remove(rootDecor);
         if (listener != null) {
             listener.onAdClosed();
         }
-        remove(rootDecor);
     }
 
-    /**
-     * 2. 完美高仿：AdMob Smart Banner 底部横幅广告
-     * 优化点：右侧集成了极其逼真的 "AdChoices" (蓝色小三角) 标识组合，带微弱投影与描边
-     */
     public static void initPrimaryView2(Activity activity, String type, MySdkImpl.AdUnitConfig config) {
         ViewGroup rootDecor = (ViewGroup) activity.getWindow().getDecorView();
         remove(rootDecor);
 
         int bannerHeightPx = dpToPx(activity, 50);
+        // 【修改】横屏游戏建议使用标准宽度(320dp)，而不是MATCH_PARENT，避免图片严重拉伸且避开左右两侧的游戏操作区
+        int bannerWidthPx = dpToPx(activity, 320);
 
         FrameLayout bannerLayout = new FrameLayout(activity);
         bannerLayout.setTag(TAG_INTERNAL_LAYOUT_ROOT);
         bannerLayout.setBackgroundColor(Color.parseColor("#F1F1F1")); // 谷歌标准浅灰打底
 
-        FrameLayout.LayoutParams baseParams = new FrameLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, bannerHeightPx);
+        // 【修改】设置固定宽度，并使其底部居中
+        FrameLayout.LayoutParams baseParams = new FrameLayout.LayoutParams(bannerWidthPx, bannerHeightPx);
         baseParams.gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
+
+        // 【新增】安全区适配：防止被底部的全面屏手势条或虚拟导航栏遮挡，影响游戏和广告点击
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            WindowInsets insets = rootDecor.getRootWindowInsets();
+            if (insets != null) {
+                baseParams.bottomMargin = insets.getSystemWindowInsetBottom();
+            }
+        }
         bannerLayout.setLayoutParams(baseParams);
 
         // 广告大图
@@ -204,7 +212,6 @@ public class PrimaryManager {
         adChoicesInfo.setOrientation(LinearLayout.HORIZONTAL);
         adChoicesInfo.setGravity(Gravity.CENTER_VERTICAL);
         adChoicesInfo.setPadding(dpToPx(activity, 4), dpToPx(activity, 1), dpToPx(activity, 4), dpToPx(activity, 1));
-        // 右上角微小半圆角打底
         adChoicesInfo.setBackground(createRoundDrawable("#B0FFFFFF", 4, activity));
 
         // "Ad" 字样
@@ -215,10 +222,10 @@ public class PrimaryManager {
         miniAdTag.setTypeface(Typeface.DEFAULT_BOLD);
         adChoicesInfo.addView(miniAdTag);
 
-        // 谷歌著名的蓝色小三角图标 (这里用 Unicode 字符 ▷ 代替，配合浅蓝色假装是 AdChoices 标志)
+        // 蓝色小三角图标
         TextView choiceIcon = new TextView(activity);
         choiceIcon.setText(" ▷");
-        choiceIcon.setTextColor(Color.parseColor("#0073E6")); // 谷歌蓝
+        choiceIcon.setTextColor(Color.parseColor("#0073E6"));
         choiceIcon.setTextSize(TypedValue.COMPLEX_UNIT_SP, 8);
         adChoicesInfo.addView(choiceIcon);
 

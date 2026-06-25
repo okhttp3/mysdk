@@ -25,13 +25,33 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         // 开屏广告
-        MySdk.showAd(MainActivity.this, MySdk.AdType.OPEN, OPEN_AD_UNIT_ID, null);
+        MySdk.showAd(MainActivity.this, MySdk.AdType.OPEN, OPEN_AD_UNIT_ID, new MySdk.PrimaryListener() {
+            @Override
+            public void onAdRewarded() {
+
+            }
+
+            @Override
+            public void onAdClosed() {
+                Log.e("wtj", "开屏广告关闭");
+            }
+        });
 
         // 开屏广告
         findViewById(R.id.btn_show_open).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MySdk.showAd(MainActivity.this, MySdk.AdType.OPEN, OPEN_AD_UNIT_ID, null);
+                MySdk.showAd(MainActivity.this, MySdk.AdType.OPEN, OPEN_AD_UNIT_ID, new MySdk.PrimaryListener() {
+                    @Override
+                    public void onAdRewarded() {
+
+                    }
+
+                    @Override
+                    public void onAdClosed() {
+                        Log.e("wtj", "开屏广告关闭");
+                    }
+                });
             }
         });
 

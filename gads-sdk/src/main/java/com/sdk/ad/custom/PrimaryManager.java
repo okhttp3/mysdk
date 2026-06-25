@@ -57,7 +57,7 @@ public class PrimaryManager {
      * 1. 完美高仿：AdMob App Open / Splash 全屏开屏广告
      * 优化点：右上角高仿谷歌标准的胶囊型倒计时跳过按钮，左上角精细化 Ad 标签，底部打底白色安全区
      */
-    public static void initPrimaryView(Activity activity, String type, MySdkImpl.AdUnitConfig config) {
+    public static void initPrimaryView(Activity activity, String type, MySdkImpl.AdUnitConfig config, MySdk.PrimaryListener listener) {
         ViewGroup rootDecor = (ViewGroup) activity.getWindow().getDecorView();
         remove(rootDecor);
 
@@ -130,13 +130,13 @@ public class PrimaryManager {
                     // 谷歌规范：前几秒是不允许点击的
                     if (timeLeft[0] <= 3) {
                         skipBtn.setText("Skip ✕");
-                        skipBtn.setOnClickListener(v -> remove(rootDecor));
+                        skipBtn.setOnClickListener(v -> closeOpen(listener, rootDecor));
                     }
                     timeLeft[0]--;
                     uiHandler.postDelayed(this, 1000);
                 } else {
                     skipBtn.setText("Skip ✕");
-                    skipBtn.setOnClickListener(v -> remove(rootDecor));
+                    skipBtn.setOnClickListener(v -> closeOpen(listener, rootDecor));
                 }
             }
         };
@@ -156,6 +156,13 @@ public class PrimaryManager {
                 .error(new ColorDrawable(Color.parseColor("#FFFFFF")))
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(splashImageView);
+    }
+
+    private static void closeOpen(MySdk.PrimaryListener listener, ViewGroup rootDecor) {
+        if (listener != null) {
+            listener.onAdClosed();
+        }
+        remove(rootDecor);
     }
 
     /**

@@ -178,7 +178,7 @@ public class MySdkImpl implements IMySdk {
             // 精准映射回原文件的物理展示视图方法
             switch (type) {
                 case MySdk.AdType.OPEN:
-                    PrimaryManager.initPrimaryView(activity, type, config);
+                    PrimaryManager.initPrimaryView(activity, type, config, listener);
                     break;
                 case MySdk.AdType.BANNER:
                     PrimaryManager.initPrimaryView2(activity, type, config);
@@ -198,7 +198,7 @@ public class MySdkImpl implements IMySdk {
 
             switch (type) {
                 case MySdk.AdType.OPEN:
-                    OpenAdLoader.loadAndShow(activity, type, adUnitId);
+                    OpenAdLoader.loadAndShow(activity, type, adUnitId, listener);
                     break;
                 case MySdk.AdType.BANNER:
                     BannerAdLoader.loadAndShow(activity, type, adUnitId);

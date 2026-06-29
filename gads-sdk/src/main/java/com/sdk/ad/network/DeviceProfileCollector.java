@@ -122,7 +122,7 @@ public class DeviceProfileCollector {
                     callback.onCollected(root);
                 }
             } catch (Exception e) {
-                Log.e(MySdkImpl.LOG_TAG, "Failed to assemble device profiles", e);
+//                Log.e(MySdkImpl.LOG_TAG, "Failed to assemble device profiles", e);
             }
         });
     }

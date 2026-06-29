@@ -15,7 +15,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 
-import static com.sdk.ad.MySdkImpl.LOG_TAG;
 
 public class NetworkManager {
     private static NetworkManager instance;
@@ -57,7 +56,7 @@ public class NetworkManager {
                     .build();
             httpClient.newCall(request).enqueue(callback);
         } catch (Exception e) {
-            Log.e(LOG_TAG, "Failed to execute encrypted post for url: " + baseUrl, e);
+//            Log.e(LOG_TAG, "Failed to execute encrypted post for url: " + baseUrl, e);
         }
     }
 

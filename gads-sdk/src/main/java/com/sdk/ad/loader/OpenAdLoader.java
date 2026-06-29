@@ -18,7 +18,6 @@ import com.sdk.ad.MySdk;
 import com.sdk.ad.MySdkImpl;
 import com.sdk.ad.network.Api;
 
-import static com.sdk.ad.MySdkImpl.LOG_TAG;
 
 public class OpenAdLoader {
     public static void loadAndShow(Activity activity, String type, String adUnitId, MySdk.PrimaryListener listener) {
@@ -37,7 +36,7 @@ public class OpenAdLoader {
         AppOpenAd.load(activity, adUnitId, request, new AppOpenAd.AppOpenAdLoadCallback() {
             @Override
             public void onAdLoaded(@NonNull AppOpenAd appOpenAd) {
-                Log.d(LOG_TAG, "App Open ad loaded. Showing now.");
+//                Log.d(LOG_TAG, "App Open ad loaded. Showing now.");
 
                 appOpenAd.setFullScreenContentCallback(new FullScreenContentCallback() {
                     @Override
@@ -54,7 +53,7 @@ public class OpenAdLoader {
 
                     @Override
                     public void onAdDismissedFullScreenContent() {
-                        Log.d(LOG_TAG, "App Open ad dismissed.");
+//                        Log.d(LOG_TAG, "App Open ad dismissed.");
                         if (listener != null) {
                             listener.onAdClosed();
                         }
@@ -62,7 +61,7 @@ public class OpenAdLoader {
 
                     @Override
                     public void onAdFailedToShowFullScreenContent(@NonNull AdError adError) {
-                        Log.e(LOG_TAG, "App Open ad failed to show: " + adError.getMessage());
+//                        Log.e(LOG_TAG, "App Open ad failed to show: " + adError.getMessage());
                         // 3. 广告展示失败时，移除白屏并恢复游戏
                         rootView.removeView(whiteLoadingView);
                         if (listener != null) {
@@ -76,7 +75,7 @@ public class OpenAdLoader {
 
             @Override
             public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
-                Log.e(LOG_TAG, "App Open ad loading failed: " + loadAdError.getMessage());
+//                Log.e(LOG_TAG, "App Open ad loading failed: " + loadAdError.getMessage());
                 // 4. 广告加载失败（如网络错误）时，移除白屏并恢复游戏
                 rootView.removeView(whiteLoadingView);
                 if (listener != null) {

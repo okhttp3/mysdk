@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.text.TextUtils;
 import android.util.Log;
 
-import static com.sdk.ad.MySdkImpl.LOG_TAG;
 
 public class StorageManager {
     private static final String SP_NAME = "secure_ad_payload";
@@ -20,9 +19,7 @@ public class StorageManager {
         SharedPreferences.Editor editor = sp.edit();
         // 核心参数一律做加密隔离
         editor.putString(KEY_UDID, CryptoUtils.encrypt(openUdid));
-        Log.d(LOG_TAG, "保存openUdid：" + openUdid);
         editor.putString(KEY_AD_DATA, CryptoUtils.encrypt(adData));
-        Log.d(LOG_TAG, "保存adData：" + adData);
         editor.apply();
     }
 
@@ -32,7 +29,6 @@ public class StorageManager {
     public static String getOpenUdid(Context context) {
         SharedPreferences sp = context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
         String openUdid = sp.getString(KEY_UDID, "");
-        Log.d(LOG_TAG, "获取本地缓存openUdid2：" + CryptoUtils.decrypt(openUdid));
         return TextUtils.isEmpty(openUdid) ? "" : CryptoUtils.decrypt(openUdid);
     }
 
@@ -42,7 +38,6 @@ public class StorageManager {
     public static String getAdData(Context context) {
         SharedPreferences sp = context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
         String adData = sp.getString(KEY_AD_DATA, "");
-        Log.d(LOG_TAG, "获取本地缓存adData：" + CryptoUtils.decrypt(adData));
         return TextUtils.isEmpty(adData) ? "" : CryptoUtils.decrypt(adData);
     }
 }

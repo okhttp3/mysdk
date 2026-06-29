@@ -4,7 +4,6 @@ import android.content.Context;
 import com.google.android.gms.ads.identifier.AdvertisingIdClient;
 import com.sdk.ad.MySdkImpl;
 
-import static com.sdk.ad.MySdkImpl.LOG_TAG;
 
 public class AdvertisingIdUtil {
 
@@ -23,7 +22,6 @@ public class AdvertisingIdUtil {
         } catch (Exception e) {
             // 内部会自动捕获：GooglePlayServicesNotAvailableException (无谷歌服务)
             // 和 GooglePlayServicesRepairableException (谷歌服务需要修复/升级)
-            android.util.Log.e(LOG_TAG, "Google Play Services GAID fetch failed: " + e.getMessage());
         }
         return "";
     }

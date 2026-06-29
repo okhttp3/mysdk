@@ -19,7 +19,6 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-import static com.sdk.ad.MySdkImpl.LOG_TAG;
 
 public class Api {
     // 1. 新增一个内部通知接口
@@ -39,9 +38,7 @@ public class Api {
         DeviceProfileCollector.collectAsync(context, rootProfile -> {
             try {
                 String plainJson = rootProfile.toString();
-                Log.e(LOG_TAG, "初始化参数：" + plainJson);
                 String encryptedData = XXTeaUtil.encryptToBase64String(plainJson, MySdkImpl.APP_ID);
-                Log.e(LOG_TAG, "初始化参数加密后：" + encryptedData);
                 String targetUrl = MySdkImpl.API_SDK + "/v1/device/init";
 
                 NetworkManager.getInstance().postEncryptedJson(targetUrl, MySdkImpl.APP_ID, encryptedData, new Callback() {
@@ -52,18 +49,15 @@ public class Api {
                                 return;
                             }
                             String encryptedResponseBody = resp.body().string().trim();
-                            Log.e(LOG_TAG, "初始化返回数据：" + encryptedResponseBody);
 
                             JSONObject responseJson = new JSONObject(encryptedResponseBody);
                             if (responseJson.optInt("code", -1) == 200) {
                                 String data = responseJson.optString("data");
                                 if (!TextUtils.isEmpty(data)) {
                                     String decryptedJsonStr = XXTeaUtil.decryptFromBase64String(data, MySdkImpl.APP_ID);
-                                    Log.e(LOG_TAG, "初始化返回数据解密：" + decryptedJsonStr);
 
                                     JSONObject dataNode = new JSONObject(decryptedJsonStr);
                                     String openUdid = dataNode.optString("open_udid", "");
-                                    Log.e(LOG_TAG, "初始化返回open_udid：" + openUdid);
 
                                     JSONObject adDelivery = dataNode.optJSONObject("ad_delivery");
 
@@ -81,7 +75,6 @@ public class Api {
                                 }
                             }
                         } catch (Exception ex) {
-                            Log.e(LOG_TAG, "Failed to analyze decrypted remote response payload.", ex);
                             if (callback != null) {
                                 callback.onFailure(ex);
                             }
@@ -90,14 +83,13 @@ public class Api {
 
                     @Override
                     public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                        Log.e(LOG_TAG, "初始化接口失败：" + e);
                         if (callback != null) {
                             callback.onFailure(e);
                         }
                     }
                 });
             } catch (Exception e) {
-                Log.e(LOG_TAG, "Encrypt or envelope failed during initialization.", e);
+//                Log.e(LOG_TAG, "Encrypt or envelope failed during initialization.", e);
             }
         });
     }
@@ -118,11 +110,9 @@ public class Api {
                 trackItem.put("event", event);
                 trackItem.put("strategy", strategy);
                 trackItem.put("timestamp", System.currentTimeMillis());
-                Log.d(LOG_TAG, "上报广告数据：" + trackItem);
 
                 OfflineReportQueue.getInstance().submitEvent(context, trackItem);
             } catch (Exception e) {
-                Log.e(LOG_TAG, "Failed to packet track event bundle.", e);
             }
         });
     }

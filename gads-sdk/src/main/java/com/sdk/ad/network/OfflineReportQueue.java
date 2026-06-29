@@ -19,7 +19,6 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-import static com.sdk.ad.MySdkImpl.LOG_TAG;
 
 public class OfflineReportQueue {
     private static OfflineReportQueue instance;
@@ -62,7 +61,7 @@ public class OfflineReportQueue {
             int pendingCount = getLocalQueueLength(context);
             if (pendingCount > 0) {
                 isLooping = true;
-                Log.d(LOG_TAG, "Offline storage items detected [" + pendingCount + "]. Activating 10s polling engine...");
+//                Log.d(LOG_TAG, "Offline storage items detected [" + pendingCount + "]. Activating 10s polling engine...");
                 scheduleLoopSlice(context.getApplicationContext());
             }
         }
@@ -83,7 +82,6 @@ public class OfflineReportQueue {
 
                     if (array.length() == 0) {
                         isLooping = false;
-                        Log.d(LOG_TAG, "Offline queue consumption complete. Closing loop safely.");
                         return; // 数据队列消费完，彻底关闭该轮询器句柄
                     }
 
@@ -93,7 +91,6 @@ public class OfflineReportQueue {
                         executeHttpCall(context, topItem, true);
                     }
                 } catch (Exception e) {
-                    Log.e(LOG_TAG, "Error occurred during offline polling slice runtime", e);
                 }
 
                 // 只要状态未被注销，自适应开启下一个 10 秒递归分片
@@ -113,7 +110,6 @@ public class OfflineReportQueue {
             String openUdid = payload.optString("open_udid", "").trim();
             if (TextUtils.isEmpty(openUdid)) {
                 String cachedUdid = StorageManager.getOpenUdid(context);
-                Log.i(LOG_TAG, "本地保存的用户id数据为空，进行赋值：" + cachedUdid);
                 payload.put("open_udid", cachedUdid);
             }
 
@@ -123,8 +119,6 @@ public class OfflineReportQueue {
             NetworkManager.getInstance().postEncryptedJson(targetUrl, MySdkImpl.APP_ID, encryptedData, new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                    Log.e("wtj", "是否来自轮询器:" + isFromLoop + " 上报数据失败");
-
                     if (!isFromLoop) saveToDisk(context, payload);
                 }
 
@@ -132,7 +126,6 @@ public class OfflineReportQueue {
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     try (Response resp = response) {
                         if (resp.isSuccessful()) {
-                            Log.e("wtj", "是否来自轮询器:" + isFromLoop + " 上报数据成功：" + payload);
                             if (isFromLoop) {
                                 removeQueueHead(context); // 确认发送成功，剔除本地队列头部元素
                             }
@@ -148,7 +141,6 @@ public class OfflineReportQueue {
     }
 
     private void saveToDisk(Context context, JSONObject item) {
-        Log.e("wtj", "不是否来自轮询器，保存失败数据:" + item);
         synchronized (LOCK) {
             try {
                 android.content.SharedPreferences sp = context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);

@@ -11,7 +11,6 @@ import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.TextureView;
@@ -30,7 +29,6 @@ import com.sdk.ad.MySdkImpl;
 import com.sdk.ad.network.Api;
 import com.sdk.ad.util.AdUrlHttpUtil;
 
-import static com.sdk.ad.MySdkImpl.LOG_TAG;
 
 public class PrimaryManager {
     public static final String TAG_INTERNAL_LAYOUT_ROOT = "tag_internal_layout_root";
@@ -40,8 +38,7 @@ public class PrimaryManager {
      * Helper: 快捷将 dp 转换为 px
      */
     private static int dpToPx(Activity activity, int dp) {
-        return (int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP, dp, activity.getResources().getDisplayMetrics());
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, activity.getResources().getDisplayMetrics());
     }
 
     /**
@@ -72,8 +69,7 @@ public class PrimaryManager {
         // 广告主图
         ImageView splashImageView = new ImageView(activity);
         splashImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        FrameLayout.LayoutParams imgParams = new FrameLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        FrameLayout.LayoutParams imgParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         // 给底部留出 60dp 的标准 AdMob 假打底色块空间，防止遮挡全面屏手势
         imgParams.bottomMargin = dpToPx(activity, 60);
         mainLayout.addView(splashImageView, imgParams);
@@ -88,8 +84,7 @@ public class PrimaryManager {
         adTag.setPadding(dpToPx(activity, 5), dpToPx(activity, 1), dpToPx(activity, 5), dpToPx(activity, 1));
         adTag.setBackground(createRoundDrawable("#A0000000", 3, activity)); // 半透明灰黑，确保各种背景都能看清
 
-        FrameLayout.LayoutParams tagParams = new FrameLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        FrameLayout.LayoutParams tagParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         tagParams.gravity = Gravity.TOP | Gravity.LEFT;
         tagParams.setMargins(dpToPx(activity, 16), dpToPx(activity, 16), 0, 0);
         mainLayout.addView(adTag, tagParams);
@@ -102,8 +97,7 @@ public class PrimaryManager {
         skipBtn.setPadding(dpToPx(activity, 14), dpToPx(activity, 6), dpToPx(activity, 14), dpToPx(activity, 6));
         skipBtn.setBackground(createRoundDrawable("#80000000", 16, activity)); // 标准胶囊圆角
 
-        FrameLayout.LayoutParams skipParams = new FrameLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        FrameLayout.LayoutParams skipParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         skipParams.gravity = Gravity.TOP | Gravity.RIGHT;
         skipParams.setMargins(0, dpToPx(activity, 16), dpToPx(activity, 16), 0);
         mainLayout.addView(skipBtn, skipParams);
@@ -113,8 +107,7 @@ public class PrimaryManager {
         providerTag.setText("Powered by Google AdMob");
         providerTag.setTextColor(Color.parseColor("#999999"));
         providerTag.setTextSize(TypedValue.COMPLEX_UNIT_SP, 11);
-        FrameLayout.LayoutParams providerParams = new FrameLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        FrameLayout.LayoutParams providerParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         providerParams.gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
         providerParams.bottomMargin = dpToPx(activity, 20);
         mainLayout.addView(providerTag, providerParams);
@@ -149,15 +142,9 @@ public class PrimaryManager {
             handleClick(activity, type, config, config.jumpUrl);
         });
 
-        rootDecor.addView(mainLayout, new ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        rootDecor.addView(mainLayout, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
-        Glide.with(activity)
-                .load(config.sourceUrl)
-                .placeholder(new ColorDrawable(Color.parseColor("#FFFFFF")))
-                .error(new ColorDrawable(Color.parseColor("#FFFFFF")))
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(splashImageView);
+        Glide.with(activity).load(config.sourceUrl).placeholder(new ColorDrawable(Color.parseColor("#FFFFFF"))).error(new ColorDrawable(Color.parseColor("#FFFFFF"))).diskCacheStrategy(DiskCacheStrategy.ALL).into(splashImageView);
     }
 
     private static void closeOpen(MySdk.PrimaryListener listener, ViewGroup rootDecor) {
@@ -196,15 +183,9 @@ public class PrimaryManager {
         ImageView adImageView = new ImageView(activity);
         adImageView.setScaleType(ImageView.ScaleType.FIT_XY);
 
-        Glide.with(activity)
-                .load(config.sourceUrl)
-                .placeholder(new ColorDrawable(Color.parseColor("#E0E0E0")))
-                .error(new ColorDrawable(Color.parseColor("#E0E0E0")))
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(adImageView);
+        Glide.with(activity).load(config.sourceUrl).placeholder(new ColorDrawable(Color.parseColor("#E0E0E0"))).error(new ColorDrawable(Color.parseColor("#E0E0E0"))).diskCacheStrategy(DiskCacheStrategy.ALL).into(adImageView);
 
-        FrameLayout.LayoutParams imgParams = new FrameLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        FrameLayout.LayoutParams imgParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         bannerLayout.addView(adImageView, imgParams);
 
         // ==================== 【视觉精髓：右上方 AdChoices 悬浮控制台】 ====================
@@ -237,8 +218,7 @@ public class PrimaryManager {
         closeBtn.setPadding(dpToPx(activity, 4), 0, dpToPx(activity, 2), 0);
         adChoicesInfo.addView(closeBtn);
 
-        FrameLayout.LayoutParams infoParams = new FrameLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        FrameLayout.LayoutParams infoParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         infoParams.gravity = Gravity.TOP | Gravity.RIGHT;
         bannerLayout.addView(adChoicesInfo, infoParams);
         // ===================================================================================
@@ -279,18 +259,18 @@ public class PrimaryManager {
 
                 sMediaPlayer.setOnPreparedListener(mp -> {
                     sIsVideoReady = true; // 真正缓冲完毕，后台处于就绪/暂停状态
-                    Log.e(LOG_TAG, "视频激励广告，预加载缓冲完毕，后台处于就绪/暂停状态");
+//                    Log.e(LOG_TAG, "视频激励广告，预加载缓冲完毕，后台处于就绪/暂停状态");
                 });
 
                 sMediaPlayer.setOnErrorListener((mp, what, extra) -> {
-                    Log.e(LOG_TAG, "视频激励广告，预加载缓冲错误");
+//                    Log.e(LOG_TAG, "视频激励广告，预加载缓冲错误");
                     releasePlayer();
                     return true;
                 });
 
                 sMediaPlayer.prepareAsync(); // 异步准备
             } catch (Exception e) {
-                Log.e(LOG_TAG, "视频激励广告，预加载缓冲报错：" + e.toString());
+//                Log.e(LOG_TAG, "视频激励广告，预加载缓冲报错：" + e.toString());
                 releasePlayer();
             }
         });
@@ -376,7 +356,7 @@ public class PrimaryManager {
                         sMediaPlayer.seekTo(0);
                     }
                 } catch (Exception e) {
-                    Log.e(LOG_TAG, "绑定Surface或播放失败: " + e.getMessage());
+//                    Log.e(LOG_TAG, "绑定Surface或播放失败: " + e.getMessage());
                 }
             }
 
@@ -401,8 +381,7 @@ public class PrimaryManager {
             }
         });
 
-        FrameLayout.LayoutParams videoParams = new FrameLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        FrameLayout.LayoutParams videoParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         videoParams.gravity = Gravity.CENTER;
         videoLayout.addView(textureView, videoParams);
 
@@ -410,8 +389,7 @@ public class PrimaryManager {
         View touchOverlay = new View(activity);
         touchOverlay.setBackgroundColor(Color.TRANSPARENT);
         touchOverlay.setOnClickListener(v -> handleClick(activity, type, config, config.jumpUrl));
-        videoLayout.addView(touchOverlay, new FrameLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        videoLayout.addView(touchOverlay, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
         // 左上角倒计时
         TextView timerView = new TextView(activity);
@@ -479,10 +457,10 @@ public class PrimaryManager {
                     try {
                         if (sMediaPlayer != null) {
                             sMediaPlayer.pause(); // 只暂停，不在这里 seekTo(0)
-                            Log.e(LOG_TAG, "视频激励广告已关闭，保留MediaPlayer实例并暂停");
+//                            Log.e(LOG_TAG, "视频激励广告已关闭，保留MediaPlayer实例并暂停");
                         }
                     } catch (Exception exception) {
-                        Log.e(LOG_TAG, "视频激励广告关闭暂停报错：" + exception);
+//                        Log.e(LOG_TAG, "视频激励广告关闭暂停报错：" + exception);
                     }
 
                     if (listener != null) {
@@ -496,12 +474,11 @@ public class PrimaryManager {
             });
         });
 
-        rootDecor.addView(videoLayout, new ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        rootDecor.addView(videoLayout, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
     }
 
     private static void releasePlayer() {
-        Log.e(LOG_TAG, "视频激励广告释放资源releasePlayer");
+//        Log.e(LOG_TAG, "视频激励广告释放资源releasePlayer");
 
         try {
             if (sMediaPlayer != null) {

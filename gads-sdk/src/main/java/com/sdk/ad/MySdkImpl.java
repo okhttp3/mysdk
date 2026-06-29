@@ -18,7 +18,7 @@ import com.sdk.ad.util.StorageManager;
 import org.json.JSONObject;
 
 public class MySdkImpl implements IMySdk {
-    public static final String LOG_TAG = "wtj";
+//    public static final String LOG_TAG = "wtj";
     public static final String VERSION = "1.0";
 
     // ==================== 核心公共常量 ====================
@@ -31,10 +31,6 @@ public class MySdkImpl implements IMySdk {
     public static String API_SDK;
     public static String ADJUST_ADID;
 
-    // SDK 核心生命周期状态机
-    private enum InitState {IDLE, INITIALIZING, SUCCESS, FALLBACK_CACHE, FAILED}
-
-    private InitState mInitState = InitState.IDLE;
 
     private int mRetryCount = 0;
     private static final int MAX_RETRY_COUNT = 5;
@@ -52,15 +48,13 @@ public class MySdkImpl implements IMySdk {
      * 1. 核心调度：异步网络配置拉取
      */
     private void startInitFlow(final Context appContext) {
-        mInitState = InitState.INITIALIZING;
-        Log.d(LOG_TAG, "SDK 初始化网络请求启动...");
+//        Log.d(LOG_TAG, "SDK 初始化网络请求启动...");
 
         Api.fetchRemoteConfig(appContext, new Api.ConfigCallback() {
             @Override
             public void onSuccess() {
                 mMainHandler.post(() -> {
-                    Log.i(LOG_TAG, "远端策略云配置同步成功.");
-                    mInitState = InitState.SUCCESS;
+//                    Log.i(LOG_TAG, "远端策略云配置同步成功.");
                     mRetryCount = 0;
                     ConfigManager.preloadVideoAdIfEnabled(appContext);
                 });
@@ -69,7 +63,7 @@ public class MySdkImpl implements IMySdk {
             @Override
             public void onFailure(final Exception e) {
                 mMainHandler.post(() -> {
-                    Log.w(LOG_TAG, "远端策略云配置同步失败: " + e.getMessage());
+//                    Log.w(LOG_TAG, "远端策略云配置同步失败: " + e.getMessage());
                     handleInitFailure(appContext);
                 });
             }
@@ -81,19 +75,17 @@ public class MySdkImpl implements IMySdk {
      */
     private void handleInitFailure(final Context appContext) {
         if (ConfigManager.hasLocalCache(appContext)) {
-            Log.i(LOG_TAG, "检测到缓存待上报数据");
-            mInitState = InitState.FALLBACK_CACHE;
+//            Log.i(LOG_TAG, "检测到缓存待上报数据");
             ConfigManager.preloadVideoAdIfEnabled(appContext);
             return;
         }
-        Log.i(LOG_TAG, "本地无缓存待上报数据");
+//        Log.i(LOG_TAG, "本地无缓存待上报数据");
         if (mRetryCount < MAX_RETRY_COUNT && NetworkManager.getInstance().isNetworkConnected(appContext)) {
             mRetryCount++;
-            Log.w(LOG_TAG, "无缓存。满足重试条件，将在 3s 后进行第 " + mRetryCount + " 次重试...");
+//            Log.w(LOG_TAG, "无缓存。满足重试条件，将在 3s 后进行第 " + mRetryCount + " 次重试...");
             mMainHandler.postDelayed(() -> startInitFlow(appContext), 3000);
         } else {
-            Log.e(LOG_TAG, "未满足重试条件或已达上限，初始化流终结.");
-            mInitState = InitState.FAILED;
+//            Log.e(LOG_TAG, "未满足重试条件或已达上限，初始化流终结.");
         }
     }
 
@@ -106,7 +98,7 @@ public class MySdkImpl implements IMySdk {
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Log.d(LOG_TAG, "游戏触发 showAd -> 类型: " + type + " | SDK状态: " + mInitState);
+//                Log.d(LOG_TAG, "游戏触发 showAd -> 类型: " + type + " | SDK状态: " + mInitState);
 
                 // 实时获取配置实体
                 AdUnitConfig config = ConfigManager.getAdUnitConfig(activity, type);
@@ -147,7 +139,7 @@ public class MySdkImpl implements IMySdk {
         static void preloadVideoAdIfEnabled(Context context) {
             AdUnitConfig config = getAdUnitConfig(context, MySdk.AdType.REWARDED);
             if (config.status && !TextUtils.isEmpty(config.sourceUrl)) {
-                Log.d(LOG_TAG, "预加载视频激励广告: " + config.sourceUrl);
+//                Log.d(LOG_TAG, "预加载视频激励广告: " + config.sourceUrl);
                 PrimaryManager.preloadVideoAd(context, config.sourceUrl);
             }
         }
@@ -160,10 +152,8 @@ public class MySdkImpl implements IMySdk {
         static void dispatch(Activity activity, String type, String adUnitId, MySdk.PrimaryListener listener, AdUnitConfig config) {
             // 完全遵循原文件中的条件：isValidCustomAd() 成功走自定义，否则走谷歌
             if (config != null && config.isValidCustomAd()) {
-                Log.i(LOG_TAG, ">> [策略路由] 分发至 -> 自定义广告通路 <<");
                 executeCustomAd(activity, type, config, listener);
             } else {
-                Log.i(LOG_TAG, ">> [策略路由] 分发至 -> 官方谷歌 AdMob 通路 <<");
                 executeGoogleAd(activity, type, adUnitId, listener);
             }
         }

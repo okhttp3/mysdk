@@ -18,7 +18,6 @@ import com.sdk.ad.MySdkImpl;
 import com.sdk.ad.custom.PrimaryManager;
 import com.sdk.ad.network.Api;
 
-import static com.sdk.ad.MySdkImpl.LOG_TAG;
 
 public class BannerAdLoader {
     // 统一使用全局唯一的 Tag，方便在新页面或切流时清理旧广告，防止叠加错乱
@@ -54,7 +53,7 @@ public class BannerAdLoader {
                 @Override
                 public void onAdLoaded() {
                     super.onAdLoaded();
-                    Log.d(LOG_TAG, "Google Banner ad loaded successfully.");
+//                    Log.d(LOG_TAG, "Google Banner ad loaded successfully.");
                     // 加载成功后，才把外壳容器塞进 DecorView，实现平滑无感展现
                     if (container.getParent() == null) {
                         rootDecor.addView(container);
@@ -65,7 +64,7 @@ public class BannerAdLoader {
                 @Override
                 public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
                     super.onAdFailedToLoad(loadAdError);
-                    Log.e(LOG_TAG, "Google Banner failed to load: " + loadAdError.getMessage() + ". Rolling back to custom banner.");
+//                    Log.e(LOG_TAG, "Google Banner failed to load: " + loadAdError.getMessage() + ". Rolling back to custom banner.");
                     removeExistingBanner(rootDecor);
                 }
 

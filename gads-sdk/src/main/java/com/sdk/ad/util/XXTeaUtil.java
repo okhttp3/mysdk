@@ -6,7 +6,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Base64;
 
-import static com.sdk.ad.MySdkImpl.LOG_TAG;
 
 /**
  * 健壮的标准 XXTEA 加密解密工具类
@@ -54,7 +53,7 @@ public class XXTeaUtil {
             if (decryptedBytes == null) return "";
             return new String(decryptedBytes, StandardCharsets.UTF_8);
         } catch (Exception e) {
-            Log.e(LOG_TAG, "Decrypt failed", e);
+//            Log.e(LOG_TAG, "Decrypt failed", e);
             return "";
         }
     }

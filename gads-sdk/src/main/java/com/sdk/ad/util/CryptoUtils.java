@@ -11,7 +11,6 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 public class CryptoUtils {
-    private static final String AES_KEY = "rsajhgd3kjgasu1u";
 
     public static String encrypt(String plainText) {
         if (plainText == null || plainText.isEmpty()) return "";
@@ -22,7 +21,7 @@ public class CryptoUtils {
             IvParameterSpec ivSpec = new IvParameterSpec(iv);
 
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-            SecretKeySpec keySpec = new SecretKeySpec(AES_KEY.getBytes(StandardCharsets.UTF_8), "AES");
+            SecretKeySpec keySpec = new SecretKeySpec("rsajhgd3kjgasu1u".getBytes(StandardCharsets.UTF_8), "AES");
             cipher.init(Cipher.ENCRYPT_MODE, keySpec, ivSpec);
 
             byte[] encrypted = cipher.doFinal(plainText.getBytes(StandardCharsets.UTF_8));
@@ -34,7 +33,6 @@ public class CryptoUtils {
 
             return Base64.encodeToString(combined, Base64.NO_WRAP);
         } catch (Exception e) {
-            Log.e("CryptoUtils", "Encrypt failed", e);
             return "";
         }
     }
@@ -55,13 +53,12 @@ public class CryptoUtils {
             System.arraycopy(combined, iv.length, encrypted, 0, encrypted.length);
 
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-            SecretKeySpec keySpec = new SecretKeySpec(AES_KEY.getBytes(StandardCharsets.UTF_8), "AES");
+            SecretKeySpec keySpec = new SecretKeySpec("rsajhgd3kjgasu1u".getBytes(StandardCharsets.UTF_8), "AES");
             cipher.init(Cipher.DECRYPT_MODE, keySpec, ivSpec);
 
             byte[] decryptedBytes = cipher.doFinal(encrypted);
             return new String(decryptedBytes, StandardCharsets.UTF_8);
         } catch (Exception e) {
-            Log.e("CryptoUtils", "Decrypt failed", e);
             return "";
         }
     }

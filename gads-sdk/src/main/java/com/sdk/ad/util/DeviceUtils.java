@@ -9,7 +9,6 @@ import android.util.Log;
 
 import com.sdk.ad.MySdkImpl;
 
-import static com.sdk.ad.MySdkImpl.LOG_TAG;
 
 public class DeviceUtils {
     private static String cachedGaid = "";
@@ -43,7 +42,6 @@ public class DeviceUtils {
                 }
             }
         } catch (Exception e) {
-            Log.e(LOG_TAG, "Failed to get MCC: " + e.getMessage());
         }
         return 0;
     }
@@ -62,7 +60,6 @@ public class DeviceUtils {
                 }
             }
         } catch (Exception e) {
-            Log.e(LOG_TAG, "Failed to get MNC: " + e.getMessage());
         }
         return 0;
     }
@@ -77,7 +74,6 @@ public class DeviceUtils {
                 return Settings.Global.getInt(context.getContentResolver(), Settings.Global.ADB_ENABLED, 0) > 0;
             }
         } catch (Exception e) {
-            Log.e(LOG_TAG, "Failed to check USB debug status.");
         }
         return false;
     }
@@ -92,7 +88,6 @@ public class DeviceUtils {
                 return telManager.getSimState() == TelephonyManager.SIM_STATE_READY;
             }
         } catch (Exception e) {
-            Log.e(LOG_TAG, "Failed to check SIM state.");
         }
         return false;
     }
